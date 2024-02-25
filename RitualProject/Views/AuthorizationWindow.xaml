@@ -1,0 +1,180 @@
+﻿<Window x:Class="RitualProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RitualProject"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="460" Width="800"
+        MinWidth="750"
+        MinHeight="340"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFilledTextBox}" x:Key="TextBoxAuth">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="FontSize" Value="13"/>
+
+        </Style>
+        <Style TargetType="PasswordBox" BasedOn="{StaticResource MaterialDesignFilledRevealPasswordBox}" x:Key="PassBoxAuth">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style TargetType="StackPanel" x:Key="BoxesStackPanel">
+            <Setter Property="Margin" Value="15"/>
+           
+        </Style>
+    </Window.Resources>
+    <Window.DataContext>
+        <local:AuthorizationViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+        <Border>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#FFA9CFFF" Offset="0"/>
+                    <GradientStop Color="#ecf4fe" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+                <Canvas>
+                    <Ellipse Margin="230 50 0 0" Width="40" Height="40" Fill="#FFA9CFFF"/>
+                    <Polygon Points="0,20 230,140 0,270" Fill="#FFA9CFFF"/>
+                    <Polygon Points="100,360 200,370 180,420" Fill="#ecf4fe"/>
+                    <Ellipse Margin="250 350 0 0" Width="40" Height="40" Fill="#ecf4fe"/>
+                    <Ellipse Margin="50 350 0 0" Width="20" Height="20" Fill="#ecf4fe"/>
+                    <Ellipse Margin="50 450 0 0" Width="20" Height="20" Fill="#ecf4fe"/>
+                    <Polygon Points="100,660 200,670 180,520" Fill="#ecf4fe"/>
+                    <Ellipse Margin="250 650 0 0" Width="40" Height="40" Fill="#ecf4fe"/>
+                </Canvas>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock HorizontalAlignment="Center"
+                        FontSize="17"
+                        FontWeight="DemiBold" Foreground="Black"
+                        >Добро пожаловать</TextBlock>
+                    <Image Source="C:\Users\marat\Downloads\pngwing.com.png" 
+                           Width="200"
+                           Height="200"
+                           Margin="0,0,0,15"
+                           />
+                    
+                    <TextBlock HorizontalAlignment="Center"
+                               FontSize="13"
+                               Foreground="#FF484343"
+                              >Авторизуйтесь</TextBlock>
+                    <TextBlock HorizontalAlignment="Center"
+                               FontSize="13"
+                               Foreground="#FF484343"
+                               >
+                         для входа в систему
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <StackPanel Margin="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1">
+            <TextBlock HorizontalAlignment="Center"
+                       FontSize="23"
+                       FontWeight="DemiBold"
+                       Margin="0,0,0,20"
+                       Foreground="#FFA9CFFF"
+                >Авторизация</TextBlock>
+            <Label Foreground="Gray"
+                   HorizontalAlignment="Center"
+                   FontSize="13">Введите логин и пароль:</Label>
+
+
+            <StackPanel Orientation="Horizontal" Margin="15,0,15,0" >
+                <materialDesign:PackIcon Kind="User" Margin="0,7,0,0"
+                                         Foreground="Gray"
+                                         VerticalAlignment="Center"/>
+                <TextBox 
+                    VerticalContentAlignment="Center"
+                    materialDesign:HintAssist.Hint="Логин" 
+                    Foreground="Black" Text="{Binding Login,UpdateSourceTrigger=PropertyChanged}"
+                    materialDesign:ValidationAssist.Background="White"
+                    
+                    Width="305"
+                >
+                    <TextBox.Style>
+                        <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxAuth}">
+                            <Setter Property="BorderBrush" Value="Red"/>
+                            <Style.Triggers>
+                                
+                                <DataTrigger Binding="{Binding ElementName=ErrorLogin,Path=Text}" Value="">
+                                    <Setter Property="BorderBrush" Value="Gray"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+               
+
+            </StackPanel>
+            <TextBlock Text="{Binding ErrorLogin}"
+                       Foreground="Red"
+                       x:Name="ErrorLogin"
+                       Margin="35,0,0,0"
+                       FontSize="10"></TextBlock>
+
+            <StackPanel Orientation="Horizontal" Margin="15">
+                <materialDesign:PackIcon Kind="Password" Margin="0,7,0,0"
+                                         Foreground="Gray"/>
+                <PasswordBox x:Name="txtPass" 
+                    materialDesign:HintAssist.Hint="Пароль"
+                            materialDesign:PasswordBoxAssist.Password="{Binding Password,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
+                    materialDesign:ValidationAssist.Background="White"
+                    Width="305"
+                    >
+                    <PasswordBox.Style>
+                        <Style TargetType="PasswordBox" BasedOn="{StaticResource PassBoxAuth}">
+                            <Setter Property="BorderBrush" Value="Red"/>
+                            <Style.Triggers>
+
+                                <DataTrigger Binding="{Binding ElementName=ErrorLogin,Path=Text}" Value="">
+                                    <Setter Property="BorderBrush" Value="Gray"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </PasswordBox.Style>
+                </PasswordBox>
+            </StackPanel>
+
+
+
+            <!-- <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button MinWidth="80" Style="{StaticResource MaterialDesignFlatAccentBgButton}"  Margin="15 50" x:Name="ButtonExit" Content="Авторизоваться" Cursor="Hand"/>
+                <Button MinWidth="80"  Style="{StaticResource MaterialDesignFlatAccentBgButton}" Command="{Binding ShowSecondUserControlCommand}" x:Name="ButtonSearch" Margin="15 50" Content="Регистрация" Cursor="Hand" />
+            </StackPanel> -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Command="{Binding AuthCommand,ValidatesOnDataErrors=True}" MinWidth="80" 
+                        CommandParameter="{Binding ElementName=txtPass}"
+                        Style="{StaticResource MaterialDesignFlatAccentBgButton}"  
+                        materialDesign:ButtonAssist.CornerRadius="15"
+                        Margin="0,15,0,0"
+                         x:Name="ButtonExit" Content="Авторизоваться" Cursor="Hand"
+                        ToolTip="Авторизоваться"
+                        FontSize="13"
+                        MinHeight="50"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                        BorderBrush="#ecf4fe"
+                        Background="#FFA9CFFF"/>
+               
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
