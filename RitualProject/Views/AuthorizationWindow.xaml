@@ -9,7 +9,8 @@
         Title="MainWindow" Height="460" Width="800"
         MinWidth="750"
         MinHeight="340"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        local:WindowCloser.EnableWindowClosing="True">
     <Window.Resources>
         <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFilledTextBox}" x:Key="TextBoxAuth">
             <Setter Property="Foreground" Value="Black"/>
@@ -131,12 +132,12 @@
                        Margin="35,0,0,0"
                        FontSize="10"></TextBlock>
 
-            <StackPanel Orientation="Horizontal" Margin="15">
+            <StackPanel Orientation="Horizontal" Margin="15,0,15,0">
                 <materialDesign:PackIcon Kind="Password" Margin="0,7,0,0"
                                          Foreground="Gray"/>
                 <PasswordBox x:Name="txtPass" 
                     materialDesign:HintAssist.Hint="Пароль"
-                            materialDesign:PasswordBoxAssist.Password="{Binding Password,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
+                            materialDesign:PasswordBoxAssist.Password="{Binding Password,UpdateSourceTrigger=PropertyChanged}"
                     materialDesign:ValidationAssist.Background="White"
                     Width="305"
                     >
@@ -145,15 +146,20 @@
                             <Setter Property="BorderBrush" Value="Red"/>
                             <Style.Triggers>
 
-                                <DataTrigger Binding="{Binding ElementName=ErrorLogin,Path=Text}" Value="">
+                                <DataTrigger Binding="{Binding ElementName=ErrorPassword,Path=Text}" Value="">
                                     <Setter Property="BorderBrush" Value="Gray"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </PasswordBox.Style>
                 </PasswordBox>
+                
             </StackPanel>
-
+            <TextBlock Text="{Binding ErrorPassword}"
+                        Foreground="Red"
+                        x:Name="ErrorPassword"
+                        Margin="35,0,0,0"
+                        FontSize="10"></TextBlock>
 
 
             <!-- <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

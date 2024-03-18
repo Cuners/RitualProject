@@ -1,0 +1,178 @@
+﻿<Window x:Class="RitualProject.ManagerProductsAddEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RitualProject"
+        mc:Ignorable="d"
+        Title="ManagerProductsAddEditWindow" 
+        Height="650" 
+        Width="1100"
+        MinWidth="1050"
+        MinHeight="600"
+        MaxWidth="1200"
+        MaxHeight="700"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        WindowStartupLocation="CenterScreen"
+         d:DataContext="{d:DesignInstance Type=local:ManagerProductsVMList}"
+        x:Name="window"
+        local:WindowCloser.EnableWindowClosing="True">
+    <Window.Resources>
+        <local:ByteArrayToBitmapImageConverter x:Name="binaryConverter" x:Key="byteToImageConverter"/>
+    </Window.Resources>
+    <Grid Background="#ebeff4">
+
+        <DockPanel>
+            <StackPanel Background="#ecf4fe"
+                        DockPanel.Dock="Top">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                        <materialDesign:PackIcon Kind="Staff"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Width="30"
+                                             Height="30"
+                                             Foreground="#2197f2"/>
+                        <TextBlock Text="Продукты" 
+                                FontSize="20"
+                               VerticalAlignment="Center" 
+                                FontWeight="DemiBold"
+                                Margin="10,0,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal"
+                        VerticalAlignment="Top" HorizontalAlignment="Right">
+                        <Button Width="30" Height="25"
+                            x:Name="ButtonMin"
+                        Click="ButtonMin_Click"
+                            Margin="5"
+                        Padding="0">
+                            <materialDesign:PackIcon Kind="Minimize"/>
+                        </Button>
+
+                        <Button Width="30" Height="25"
+                            x:Name="ButtonClose"
+                       Click="ButtonClose_Click"
+                            Margin="5"
+                        Padding="0">
+                            <materialDesign:PackIcon Kind="Close"/>
+                        </Button>
+
+
+
+                    </StackPanel>
+                </Grid>
+                <Separator Background="LightGray"/>
+            </StackPanel>
+            <ScrollViewer DockPanel.Dock="Top">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource StackPanelBorder}" >
+                        <DockPanel Background="White" LastChildFill="True">
+
+                            <StackPanel DockPanel.Dock="Top" >
+                                <Separator Background="LightGray"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="20"
+                    DockPanel.Dock="Top">
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Right">
+                                    <TextBlock Grid.Row="0" Grid.Column="0"
+                                                Text="Название"
+                                             Style="{StaticResource TextBlockEdit}"
+                                       Margin="0,0,5,0"/>
+                                    <TextBox 
+                                 BorderThickness="1"
+                                     Width="250"
+                                 materialDesign:HintAssist.Hint="Название"
+                                     Text="{Binding ProductEd.Name}"
+                                  />
+
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <TextBlock Grid.Row="0" Grid.Column="0"
+                                                Text="Цена"
+                                               
+                                             Style="{StaticResource TextBlockEdit}"
+                                       Margin="0,0,5,0"/>
+                                    <TextBox 
+                                    BorderThickness="1"
+                                          
+                                     Width="250"
+                                    materialDesign:HintAssist.Hint="Цена"
+                                        
+                                     Text="{Binding ProductEd.Price}"
+                                  />
+
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Right">
+                                    <TextBlock Grid.Row="0" Grid.Column="0"
+                                                Text="Описание"
+                                             Style="{StaticResource TextBlockEdit}"
+                                       Margin="0,0,5,0"/>
+                                    <TextBox 
+                                 BorderThickness="1"
+                                     Width="250"
+                                
+                                        Height="200"
+                                        Text="{Binding ProductEd.Opisanie}"
+                                  />
+
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Right">
+                                    <TextBlock Grid.Row="0" Grid.Column="0"
+                                                Text="Категория"
+                                             Style="{StaticResource TextBlockEdit}"
+                                       Margin="0,0,5,0"/>
+                                    <ComboBox     Width="250"
+                                                  materialDesign:HintAssist.Hint="Категория"
+                                                  ItemsSource="{Binding Categories}"
+                                                  DisplayMemberPath="Name"
+                                                  SelectedValue="{Binding ProductEd.CategoryId}"
+                                                  SelectedValuePath="CategoryId"
+                                                  SelectedItem="{Binding Category}"
+                                                  Grid.Row="1"
+                                                  Margin="2"
+                                                  BorderThickness="1"/>
+
+                                </StackPanel>
+
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                    <StackPanel Grid.Column="1">
+                        <ContentControl Content="{Binding CurrentControl}"/>
+                    </StackPanel>
+                    
+                </Grid>
+                
+            </ScrollViewer>
+            <Button  MinWidth="80" 
+                     Width="200"
+                     DockPanel.Dock="Bottom"
+            
+             Style="{StaticResource MaterialDesignFlatAccentBgButton}"  
+             materialDesign:ButtonAssist.CornerRadius="15"
+                                     Command="{Binding EditAddProductCommand}"
+                                     CommandParameter="{Binding}"
+             Margin="0,15,0,0"
+              x:Name="ButtonExit" Content="Сохранить" Cursor="Hand"
+                     HorizontalAlignment="Right"
+             ToolTip="Сохранить"
+             FontSize="13"
+             MinHeight="50"
+             materialDesign:ShadowAssist.ShadowDepth="Depth0"
+             BorderBrush="#ecf4fe"
+             Background="#FFA9CFFF"/>
+        </DockPanel>
+    </Grid>
+</Window>

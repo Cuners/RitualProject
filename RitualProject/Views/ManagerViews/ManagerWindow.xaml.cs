@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace RitualProject
 {
     /// <summary>
-    /// Логика взаимодействия для AdminWindow.xaml
+    /// Логика взаимодействия для ManagerWindow.xaml
     /// </summary>
-    public partial class AdminWindow : Window
+    public partial class ManagerWindow : Window
     {
-        public AdminWindow()
+        public ManagerWindow()
         {
             InitializeComponent();
         }

@@ -1,0 +1,357 @@
+﻿<UserControl x:Class="RitualProject.StorekeeperWareHouseUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RitualProject"
+             mc:Ignorable="d" 
+                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+         
+         d:DesignHeight="900" d:DesignWidth="800"
+         Background="White">
+    <UserControl.DataContext>
+        <local:StorekeeperProductsVM/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" x:Key="TextBlockStatistics">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style TargetType="Label" x:Key="LabelRightAl">
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="#ebeff4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+
+        <TabControl Style="{StaticResource MaterialDesignFilledTabControl}">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="Товары"
+                               />
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Border Style="{StaticResource StackPanelBorder}"  Grid.Row="1" Margin="10,10,1,10">
+                        <Grid Background="White">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="47"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock  Text="Товары на складе"
+                                            FontSize="16"/>
+
+                                <DockPanel Grid.Column="2">
+                                    <materialDesign:PackIcon Grid.Column="1" Kind="Search"
+                                                             VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                             Width="26"
+                                                             Height="26"
+                                                             BorderThickness="1,1,0,1"
+                                                             BorderBrush="Gray"
+                                                             Background="#ebeff4"
+                                                             />
+                                    <TextBox Text="{Binding SearchUserByName,UpdateSourceTrigger=PropertyChanged}"
+                                             BorderThickness="1" 
+                                             materialDesign:HintAssist.Hint="Поиск"
+                                             Padding="5,5,0,0"
+                                             />         
+                                </DockPanel>
+                            </Grid>
+
+                            <ListBox Style="{StaticResource MaterialDesignListBox}"
+                                     ItemsSource="{Binding WareHouses}"
+                                     SelectedItem="{Binding WareHouseSelectedItem}"
+                                     Background="#ebeff4"
+                                     Margin="5" Grid.Row="1"
+                                     
+                                     >
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Width="1000"
+                                              HorizontalAlignment="Left">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <Label Content="IdСклад:"
+                                                           Style="{StaticResource LabelRightAl}"
+                                                   Grid.Column="0" Grid.Row="0"/>
+                                            <Label Content="Продукт:"
+                                                       Style="{StaticResource LabelRightAl}"
+                                                       Grid.Column="0" Grid.Row="1"/>
+                                            <Label Content="Количество:"
+                                                       Style="{StaticResource LabelRightAl}"
+                                                   Grid.Row="2"/>
+                                            <Label Content="{Binding CompositionId}"
+                                                   FontSize="16"
+                                                   Grid.Column="1" 
+                                                   Grid.Row="0"/>
+                                            <Label Content="{Binding Product.Name}"
+                                                   FontSize="16"
+                                                   Grid.Row="1"
+                                                   Grid.Column="1"/>
+                                            <Label Content="{Binding Quantity}"
+                                                       FontSize="16"
+                                                   Grid.Row="2" 
+                                                   Grid.Column="1"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+
+                            </ListBox>
+
+
+
+                        </Grid>
+                    </Border>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="Инвентаризация"
+                               Foreground="White"/>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Border Style="{StaticResource StackPanelBorder}"  Grid.Row="1" Margin="10,10,10,10">
+                        <Grid Background="White">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="47"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="10" Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBlock  Text="Инвентаризация"
+                                            FontSize="16"
+                                            />
+                                <DockPanel Grid.Column="2" 
+                                            >
+                                    <materialDesign:PackIcon Grid.Column="1" Kind="Search"
+                                                             VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                             Width="26"
+                                                             Height="26"
+                                                             BorderThickness="1,1,0,1"
+                                                             BorderBrush="Gray"
+                                                             Background="#ebeff4"
+                                                             />
+                                    <TextBox Text="{Binding SearchUserByName,UpdateSourceTrigger=PropertyChanged}"
+                                             BorderThickness="1" 
+                                             materialDesign:HintAssist.Hint="Поиск"
+                                             Padding="5,5,0,0"
+                                             />
+                                </DockPanel>
+                            </Grid>
+
+
+                            <DockPanel Grid.Row="1"
+                                       
+                                        >
+                                <StackPanel VerticalAlignment="Center"
+                                            Margin="5,0,0,0">
+                                    <Button Content="Инвентаризировать"
+                                            Style="{StaticResource MaterialDesignFlatAccentBgButton}"  
+                                            BorderBrush="LightBlue"
+                                            Command="{Binding CreateDocument}"
+                                            CommandParameter="{Binding}"
+                                            Background="#FFA9CFFF"
+                                            materialDesign:ButtonAssist.CornerRadius="15"
+                                            >
+                                        
+                                    </Button>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Margin="5"
+                                            Command="{Binding MinusInventarization}"
+                                            CommandParameter="{Binding}">
+                                        <materialDesign:PackIcon Kind="Minus"/>
+                                    </Button>
+                                    <Button Margin="5">
+                                        <materialDesign:PackIcon Kind="Add"/>
+                                    </Button>
+                                </StackPanel>
+                                
+                            </DockPanel>
+                            <ListBox Style="{StaticResource MaterialDesignListBox}"
+                                     ItemsSource="{Binding InventarizationDTO}"
+                                     SelectedItem="{Binding InventarizationDTSelectedItem}"
+                                     Background="#ebeff4"
+                                     Margin="5"
+                                     Grid.Row="2">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+
+                                        <Grid Width="1000"
+                                              HorizontalAlignment="Left">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="110"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <Label Content="IdСклад:"
+                                                           Style="{StaticResource LabelRightAl}"/>
+                                            <Label Content="Продукт:"
+                                                       Style="{StaticResource LabelRightAl}"
+                                                   Grid.Row="1"/>
+                                            <Label Content="Количество:"
+                                                       Style="{StaticResource LabelRightAl}"
+                                                   Grid.Row="2"/>
+                                            <Label Content="Фактическое:"
+                                                       Style="{StaticResource LabelRightAl}"
+                                                   Grid.Row="3"/>
+                                            <Label Content="Сумма:"
+                                                       Style="{StaticResource LabelRightAl}"
+                                                   Grid.Row="4"/>
+                                            <Label Content="Различность:"
+                                                       Style="{StaticResource LabelRightAl}"
+                                                   Grid.Row="5"/>
+                                            <Label Content="{Binding CompositionID}"
+                                                   FontSize="16"
+                                                   Grid.Column="1" 
+                                                   />
+                                            <Label Content="{Binding Product}"
+                                                   FontSize="16"
+                                                   Grid.Row="1"
+                                                   Grid.Column="1"/>
+                                            <Label Content="{Binding Quantity}"
+                                                       FontSize="16"
+                                                   Grid.Row="2" 
+                                                   Grid.Column="1"/>
+                                            <Label Content="{Binding QuantityFact}"
+                                                       FontSize="16"
+                                                   Grid.Row="3" 
+                                                   Grid.Column="1"/>
+                                            <Label Content="{Binding Price}"
+                                                       FontSize="16"
+                                                   Grid.Row="4" 
+                                                   Grid.Column="1"/>
+                                            <Label Content="{Binding PriceFact}"
+                                                       FontSize="16"
+                                                   Grid.Row="5" 
+                                                   Grid.Column="1"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+
+                            </ListBox>
+                        </Grid>
+                    </Border>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+        <Border Grid.Column="1" Style="{StaticResource StackPanelBorder}" Margin="3,0,10,10">
+            <Grid Background="White" Margin="0,50,0,0">
+                <StackPanel >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="IdСклад:"
+                           Style="{StaticResource LabelRightAl}"
+                               Grid.Row="0"/>
+                        <Label Content="Продукт:"
+                           Style="{StaticResource LabelRightAl}"
+                               Grid.Row="1"/>
+                        
+                        <Label Content="Количество"
+                           Style="{StaticResource LabelRightAl}"
+                               Grid.Row="2"/>
+                        <Label Content="Количество на складе:"
+                           Style="{StaticResource LabelRightAl}"
+                               Grid.Row="3"/>
+                        <Label Content="{Binding Status, TargetNullValue=Излишки}"
+                           Style="{StaticResource LabelRightAl}"
+                               Grid.Row="4"/>
+                        <Label Content="{Binding IdWareHouse}"
+                               Grid.Row="0"
+                               Grid.Column="1"
+                               FontSize="16"/>
+                        <Label Content="{Binding Product}"
+                               Grid.Row="1"
+                               Grid.Column="1"
+                               FontSize="16"/>
+                        <Label Content="{Binding Quantity}"
+                               Grid.Row="2"
+                               Grid.Column="1"
+                               FontSize="16"/>
+                        <TextBox Text="{Binding QuantitySklad,UpdateSourceTrigger=PropertyChanged}"
+                                 materialDesign:HintAssist.Hint="Склад"
+                                 Width="180"
+                                 HorizontalAlignment="Left"
+                               Grid.Row="3"
+                               Grid.Column="1"
+                               FontSize="16"/>
+                        <Label Content="{Binding DataIzlishkiIliNet}"
+                               
+                               Grid.Row="4"
+                               Grid.Column="1"
+                               FontSize="16"/>
+                        <Button Grid.Row="5" Grid.ColumnSpan="2"
+                                Style="{StaticResource MaterialDesignFlatAccentBgButton}"  
+                                Command="{Binding AddInventarization}"
+                                CommandParameter="{Binding}"
+                                BorderBrush="LightBlue"
+                                HorizontalAlignment="Center"
+                                Content="Подтвердить"
+                                Background="#FFA9CFFF"
+                                materialDesign:ButtonAssist.CornerRadius="15"
+                                Margin="10,0,0,0"
+                               
+                                >
+                            
+                        </Button>
+                    </Grid>
+
+                </StackPanel>
+                
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

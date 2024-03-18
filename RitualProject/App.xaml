@@ -3,8 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:RitualProject"
              StartupUri="Views/AuthorizationWindow.xaml">
+    <!--StartupUri="Views/AuthorizationWindow.xaml"-->
     <Application.Resources>
+        
         <ResourceDictionary>
+            <Style TargetType="Border" x:Key="StackPanelBorder">
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="BorderThickness" Value="0,2,0,0"/>
+                <Setter Property="BorderBrush" Value="LightGray"/>
+                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="CornerRadius" Value="2"/>
+            </Style>
+            <Style TargetType="TextBlock" x:Key="TextBlockEdit">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Foreground" Value="Gray"/>
+                <Setter Property="Margin" Value="0,0,5,0"/>
+            </Style>
+            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                <Setter Property="Padding" Value="2,3,0,0"/>
+                <Setter Property="FontSize" Value="13"/>
+
+
+            </Style>
+            <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Padding" Value="2"/>
+                <Setter Property="FontSize" Value="13"/>
+            </Style>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
@@ -12,5 +47,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+        
     </Application.Resources>
+
 </Application>

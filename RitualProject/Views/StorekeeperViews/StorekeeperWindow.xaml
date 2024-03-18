@@ -1,19 +1,19 @@
-﻿<Window x:Class="RitualProject.AdminWindow"
+﻿<Window x:Class="RitualProject.StorekeeperWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RitualProject"
         mc:Ignorable="d"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="AdminWindow" Height="900" Width="1410"
-        WindowStartupLocation="CenterScreen"
-        x:Name="window"
-        MinWidth="720"
-        MinHeight="500"
-        local:WindowCloser.EnableWindowClosing="True">
+           xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="StorekeeperWindow" Height="900" Width="1410"
+    WindowStartupLocation="CenterScreen"
+    x:Name="window"
+    MinWidth="720"
+    MinHeight="500"
+    local:WindowCloser.EnableWindowClosing="True">
     <Window.DataContext>
-        <local:AdminViewModelMain/>
+        <local:StorekeeperViewModel/>
     </Window.DataContext>
     <Window.Resources>
         <local:ByteArrayToBitmapImageConverter x:Name="binaryConverter" x:Key="byteToImageConverter"/>
@@ -21,32 +21,32 @@
             <Setter Property="HorizontalAlignment" Value="Center"/>
 
             <Setter Property="Margin" Value="10"/>
-            
+
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
                         <Border x:Name="border"
-                                Height="50"
-                                Width="250">
+                            Height="50"
+                            Width="250">
                             <Border.Background>
                                 <SolidColorBrush x:Name="BorderBackground"
-                                                 Color="#ecf4fe"/>
+                                             Color="#ecf4fe"/>
                             </Border.Background>
                             <Grid>
                                 <Border x:Name="Indicator"
-                                        Height="35"
-                                        Width="4"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Background="#2197f2"
-                                        
-                                        Visibility="Collapsed"
-                                        CornerRadius="2"
-                                        >
+                                    Height="35"
+                                    Width="4"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="#2197f2"
+                                    
+                                    Visibility="Collapsed"
+                                    CornerRadius="2"
+                                    >
                                     <Border.Effect>
                                         <DropShadowEffect ShadowDepth="3"
-                                                          Opacity="0.3" Direction="360" Color="#FFFB7171"
-                                                          />
+                                                      Opacity="0.3" Direction="360" Color="#FFFB7171"
+                                                      />
                                     </Border.Effect>
                                 </Border>
                                 <ContentPresenter/>
@@ -55,32 +55,32 @@
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver"
-                                     Value="True">
+                                 Value="True">
                                 <Setter Property="Visibility"
-                                        TargetName="Indicator"
-                                        Value="Visible"/>
+                                    TargetName="Indicator"
+                                    Value="Visible"/>
                             </Trigger>
                             <EventTrigger RoutedEvent="Border.MouseEnter"
-                                          SourceName="border">
+                                      SourceName="border">
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <ColorAnimation Storyboard.TargetName="BorderBackground"
-                                                        Storyboard.TargetProperty="Color"
-                                                        From="#ecf4fe"
-                                                        To="White"
-                                                        Duration="0:0:0.3"/>
+                                                    Storyboard.TargetProperty="Color"
+                                                    From="#ecf4fe"
+                                                    To="White"
+                                                    Duration="0:0:0.3"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
                             <EventTrigger RoutedEvent="Border.MouseLeave"
-                                          SourceName="border">
+                                      SourceName="border">
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <ColorAnimation Storyboard.TargetName="BorderBackground"
-                                                        Storyboard.TargetProperty="Color"
-                                                        From="White"
-                                                        To="#ecf4fe"
-                                                        Duration="0:0:0.3"/>
+                                                    Storyboard.TargetProperty="Color"
+                                                    From="White"
+                                                    To="#ecf4fe"
+                                                    Duration="0:0:0.3"/>
 
 
                                     </Storyboard>
@@ -88,11 +88,11 @@
                             </EventTrigger>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter Property="Background" 
-                                        TargetName="border"
-                                        Value="White"/>
+                                    TargetName="border"
+                                    Value="White"/>
                                 <Setter Property="Visibility"
-                                        TargetName="Indicator"
-                                        Value="Visible"/>
+                                    TargetName="Indicator"
+                                    Value="Visible"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -106,7 +106,7 @@
         </Style>
         <Style TargetType="TextBlock" x:Key="TextBlockDashBoard">
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="DemiBold"/>
             <Setter Property="Foreground" Value="Black"/>
 
@@ -115,40 +115,42 @@
 
     <Grid>
         <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition 
-                              x:Name="FirstColumn"
-                              Width="250">
-                --><!--<ColumnDefinition.Style>
-                    <Style TargetType="ColumnDefinition">
-                        <Setter Property="Width" Value="250"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=ToggleMenuButton,Path=IsChecked}" Value="True">
-                                <DataTrigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard SpeedRatio="5" AccelerationRatio=".8">
-                                            <DoubleAnimation Storyboard.TargetProperty="Width" From="250" To="100"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </DataTrigger.EnterActions>
-                                <DataTrigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard SpeedRatio="5" AccelerationRatio=".8">
-                                            <DoubleAnimation Storyboard.TargetProperty="Width" From="100" To="250"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </DataTrigger.ExitActions>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ColumnDefinition.Style>--><!--
-            </ColumnDefinition>
-            <ColumnDefinition Width="1.5*"/>
-        </Grid.ColumnDefinitions>-->
+        <ColumnDefinition 
+                          x:Name="FirstColumn"
+                          Width="250">
+            -->
+        <!--<ColumnDefinition.Style>
+                <Style TargetType="ColumnDefinition">
+                    <Setter Property="Width" Value="250"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=ToggleMenuButton,Path=IsChecked}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard SpeedRatio="5" AccelerationRatio=".8">
+                                        <DoubleAnimation Storyboard.TargetProperty="Width" From="250" To="100"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard SpeedRatio="5" AccelerationRatio=".8">
+                                        <DoubleAnimation Storyboard.TargetProperty="Width" From="100" To="250"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ColumnDefinition.Style>-->
+        <!--
+        </ColumnDefinition>
+        <ColumnDefinition Width="1.5*"/>
+    </Grid.ColumnDefinitions>-->
         <DockPanel>
 
 
             <Border Background="#ecf4fe"
-                 >
+             >
                 <Border.Style>
                     <Style TargetType="Border">
                         <Setter Property="Width" Value="250"/>
@@ -178,31 +180,31 @@
 
                         <StackPanel Height="80" Background="#ecf4fe" Orientation="Horizontal" DockPanel.Dock="Top">
                             <ToggleButton HorizontalAlignment="Right"  Style="{StaticResource MaterialDesignFlatButton}"
-                                      x:Name="ToggleMenuButton"
-                                      Margin="10,0,0,0">
+                                  x:Name="ToggleMenuButton"
+                                  Margin="10,0,0,0">
                                 <materialDesign:PackIcon Width="30"
-                             Height="30">
+                         Height="30">
                                     <materialDesign:PackIcon.Style>
                                         <Style TargetType="materialDesign:PackIcon">
                                             <Setter Property="Kind" Value="Menu"/>
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding ElementName=ToggleMenuButton,Path=IsChecked}" Value="True">
                                                     <Setter Property="Kind" Value="MenuClose"/>
-                                                    
+
                                                     <!--<DataTrigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard SpeedRatio="5" AccelerationRatio=".8">
-                                                                <DoubleAnimation Storyboard.TargetProperty="Width" From="250" To="70"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.EnterActions>
-                                                    <DataTrigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard SpeedRatio="5" AccelerationRatio=".8">
-                                                                <DoubleAnimation Storyboard.TargetProperty="Width" From="70" To="250"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.ExitActions>-->
+                                                    <BeginStoryboard>
+                                                        <Storyboard SpeedRatio="5" AccelerationRatio=".8">
+                                                            <DoubleAnimation Storyboard.TargetProperty="Width" From="250" To="70"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.EnterActions>
+                                                <DataTrigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard SpeedRatio="5" AccelerationRatio=".8">
+                                                            <DoubleAnimation Storyboard.TargetProperty="Width" From="70" To="250"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.ExitActions>-->
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -212,9 +214,9 @@
                             </ToggleButton>
 
                             <materialDesign:PackIcon Kind="Tombstone" Width="60"
-                                                     
-                                                 Height="60"
-                                                 VerticalAlignment="Center">
+                                                 
+                                             Height="60"
+                                             VerticalAlignment="Center">
                                 <materialDesign:PackIcon.Foreground>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                         <GradientStop Color="White"/>
@@ -223,23 +225,23 @@
                                 </materialDesign:PackIcon.Foreground>
                             </materialDesign:PackIcon>
                             <TextBlock VerticalAlignment="Center"
-                                   Foreground="Black"
-                                   FontSize="30"
-                                       FontWeight="Bold"
-                                   Margin="5,0,0,0">Рит</TextBlock>
+                               Foreground="Black"
+                               FontSize="30"
+                                   FontWeight="Bold"
+                               Margin="5,0,0,0">Рит</TextBlock>
                             <TextBlock VerticalAlignment="Center"
-                                   Foreground="#2197f2"
-                                   FontSize="30"
-                                   >уал</TextBlock>
+                               Foreground="#2197f2"
+                               FontSize="30"
+                               >уал</TextBlock>
 
                         </StackPanel>
 
                         <Border BorderThickness="1"
-                            BorderBrush="LightGray"
-                            Background="#ebeff4"
-                            Height="50"
-                                DockPanel.Dock="Top"
-                            >
+                        BorderBrush="LightGray"
+                        Background="#ebeff4"
+                        Height="50"
+                            DockPanel.Dock="Top"
+                        >
                             <Border.Style>
                                 <Style TargetType="Border">
                                     <Setter Property="Opacity" Value="1"/>
@@ -249,7 +251,7 @@
                                                 <BeginStoryboard>
                                                     <Storyboard SpeedRatio="5" AccelerationRatio=".8">
                                                         <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0"/>
-                                                     
+
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </DataTrigger.EnterActions>
@@ -257,7 +259,7 @@
                                                 <BeginStoryboard>
                                                     <Storyboard SpeedRatio="5" AccelerationRatio=".8">
                                                         <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1"/>
-                                                     
+
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </DataTrigger.ExitActions>
@@ -266,30 +268,30 @@
                                 </Style>
                             </Border.Style>
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Панель админа" 
-                                           HorizontalAlignment="Center"
-                                           Margin="10,0,0,0"
-                                       FontSize="26"
-                                       Foreground="Gray"
-                                       VerticalAlignment="Center"
-                                       FontWeight="DemiBold">
-                                    
+                                <TextBlock Text="Панель кладовщика" 
+                                       HorizontalAlignment="Center"
+                                       Margin="10,0,0,0"
+                                   FontSize="24"
+                                   Foreground="Gray"
+                                   VerticalAlignment="Center"
+                                   FontWeight="DemiBold">
+
                                 </TextBlock>
                             </StackPanel>
                         </Border>
                         <StackPanel DockPanel.Dock="Bottom"
-                                    Margin="0,0,0,50">
+                                Margin="0,0,0,50">
                             <RadioButton Style="{StaticResource BtnStyle}"
-                                 x:Name="RadioButtonLogout"
-                                     Command="{Binding CloseWindowNow}"
-                                    >
+                             x:Name="RadioButtonLogout"
+                                 Command="{Binding CloseWindowNow}"
+                                >
                                 <StackPanel Orientation="Horizontal" 
-                                        VerticalAlignment="Center" 
-                                        Margin="10,0,0,0">
+                                    VerticalAlignment="Center" 
+                                    Margin="10,0,0,0">
                                     <materialDesign:PackIcon Width="40" Height="40"
-                                                 Kind="Logout"
-                                                 
-                                                 Margin="0,0,10,0">
+                                             Kind="Logout"
+                                             
+                                             Margin="0,0,10,0">
                                         <materialDesign:PackIcon.Style>
                                             <Style TargetType="materialDesign:PackIcon">
                                                 <Setter Property="Foreground" Value="Gray"/>
@@ -305,28 +307,28 @@
                                         </materialDesign:PackIcon.Style>
                                     </materialDesign:PackIcon>
                                     <TextBlock Text="Выход"
-                                           Style="{StaticResource TextBlockDashBoard}">
+                                       Style="{StaticResource TextBlockDashBoard}">
 
                                     </TextBlock>
                                 </StackPanel>
                             </RadioButton>
                         </StackPanel>
                         <StackPanel 
-                                    Width="250"
-                                  DockPanel.Dock="Top"
-                                Margin="0,10,0,0">
+                                Width="250"
+                              DockPanel.Dock="Top"
+                            Margin="0,10,0,0">
 
                             <RadioButton Style="{StaticResource BtnStyle}"
-                                 x:Name="RadioButUsers"
-                                  IsChecked="True" 
-                                     Command="{Binding ShowFirstUserControlCommand}">
+                             x:Name="RadioButUsers"
+                              IsChecked="True" 
+                                 Command="{Binding ShowFirstUserControlCommand}">
                                 <StackPanel Orientation="Horizontal" 
-                                        VerticalAlignment="Center" 
-                                        Margin="10,0,0,0">
+                                    VerticalAlignment="Center" 
+                                    Margin="10,0,0,0">
                                     <materialDesign:PackIcon Width="40" Height="40"
-                                                 Kind="UserSupervisor"
-                                                 
-                                                 Margin="4,0,8,0">
+                                             Kind="Warehouse"
+                                             
+                                             Margin="4,0,8,0">
                                         <materialDesign:PackIcon.Style>
                                             <Style TargetType="materialDesign:PackIcon">
                                                 <Setter Property="Foreground" Value="Gray"/>
@@ -341,48 +343,18 @@
                                             </Style>
                                         </materialDesign:PackIcon.Style>
                                     </materialDesign:PackIcon>
-                                    <TextBlock Text="Пользователи"
-                                           Style="{StaticResource TextBlockDashBoard}" 
-                                           
-                                       >
+                                    <TextBlock Text="Инвентаризация"
+                                       Style="{StaticResource TextBlockDashBoard}" 
+                                       
+                                   >
                                     </TextBlock>
 
 
                                 </StackPanel>
                             </RadioButton>
-                            <RadioButton Style="{StaticResource BtnStyle}"
-                                 x:Name="RadioButtonSettings"
-                                     Command="{Binding ShowSecondUserControlCommand}"
-                                    >
-                                <StackPanel Orientation="Horizontal" 
-                                        VerticalAlignment="Center" 
-                                        Margin="10,0,0,0">
-                                    <materialDesign:PackIcon Width="40" Height="40"
-                                                 Kind="Book"
-                                                 
-                                                 Margin="0,0,10,0">
-                                        <materialDesign:PackIcon.Style>
-                                            <Style TargetType="materialDesign:PackIcon">
-                                                <Setter Property="Foreground" Value="Gray"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding  ElementName=RadioButtonSettings, Path=IsChecked}" Value="True">
-                                                        <Setter Property="Foreground" Value="#2197f2"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding  ElementName=RadioButtonSettings, Path=IsMouseOver}" Value="True">
-                                                        <Setter Property="Foreground" Value="#2197f2"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </materialDesign:PackIcon.Style>
-                                    </materialDesign:PackIcon>
-                                    <TextBlock Text="Роли"
-                                           Style="{StaticResource TextBlockDashBoard}">
-
-                                    </TextBlock>
-                                </StackPanel>
-                            </RadioButton>
+                            
                         </StackPanel>
-                        
+
                     </DockPanel>
 
                 </Grid>
@@ -400,18 +372,18 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal" >
                         <TextBlock Text="123" 
-                               VerticalAlignment="Center"
-                               FontSize="23"
-                               Margin="20,0,0,0"/>
+                           VerticalAlignment="Center"
+                           FontSize="23"
+                           Margin="20,0,0,0"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1" 
-                            Orientation="Horizontal"
-                            >
+                        Orientation="Horizontal"
+                        >
                         <StackPanel Orientation="Horizontal">
                             <Grid>
-                                <Ellipse Width="47" 
-                                 Height="47" 
-                                 Fill="#FFA9CFFF"/>
+                                <Ellipse Width="32" 
+                             Height="32" 
+                             Fill="#FFA9CFFF"/>
                                 <Image Width="48" Height="48" Source="{Binding ImageUser, TargetNullValue={x:Null}, Converter={StaticResource byteToImageConverter}}" Stretch="UniformToFill">
                                     <Image.Clip>
                                         <EllipseGeometry Center="24 24" RadiusX="24" RadiusY="24"/>
@@ -419,28 +391,28 @@
                                 </Image>
                             </Grid>
                             <TextBlock VerticalAlignment="Center" Text="{Binding UserName,TargetNullValue=Какой-точел}"
-                                   Margin="5,0,0,0"></TextBlock>
+                               Margin="5,0,0,0"></TextBlock>
                         </StackPanel>
 
 
 
                     </StackPanel>
                     <StackPanel Grid.Column="2" Orientation="Horizontal"
-                            VerticalAlignment="Top" HorizontalAlignment="Right">
+                        VerticalAlignment="Top" HorizontalAlignment="Right">
                         <Button Width="40" Height="25"
-                            Click="ButtonMin_Click"
-                            Padding="0"
-                           >
+                        Click="ButtonMin_Click"
+                        Padding="0"
+                       >
                             <materialDesign:PackIcon Kind="Minimize"/>
                         </Button>
                         <Button Width="40" Height="25"
-                            Click="Button_ClickMaxMin"
-                            Padding="0">
+                        Click="Button_ClickMaxMin"
+                        Padding="0">
                             <materialDesign:PackIcon Kind="Maximize" x:Name="MaxMinIcon"/>
                         </Button>
                         <Button Width="40" Height="25"
-                            Click="Button_ClickClose"
-                            Padding="0">
+                        Click="Button_ClickClose"
+                        Padding="0">
                             <materialDesign:PackIcon Kind="Close"/>
                         </Button>
 
@@ -449,15 +421,13 @@
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="1" 
-                  Background="#ecf4fe">
+              Background="#ecf4fe">
                     <ScrollViewer>
                         <Border Margin="5,5,5,10" 
-                        Background="#ebeff4"
-                        CornerRadius="20"
-                        >
-                            <StackPanel>
-                                <ContentControl Content="{Binding CurrentControl}"/>
-                            </StackPanel>
+                    Background="#ebeff4"
+                    CornerRadius="20"
+                    >
+                            <ContentControl Content="{Binding CurrentControl}"/>
                         </Border>
                     </ScrollViewer>
                 </Grid>
@@ -466,5 +436,4 @@
             </Grid>
         </DockPanel>
     </Grid>
-    
 </Window>
