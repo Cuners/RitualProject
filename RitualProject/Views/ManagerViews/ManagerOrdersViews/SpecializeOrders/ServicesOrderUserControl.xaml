@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="RitualProject.ServicesOrderUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RitualProject"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             d:DataContext="{d:DesignInstance Type=local:ManagerOrdersVMList}"
+             Background="White">
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Right">
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                                               Text="Услуга"
+                                               Style="{StaticResource TextBlockEdit}"
+                                               Margin="0,0,5,0"/>
+                <ComboBox     Width="250"
+                              materialDesign:HintAssist.Hint="Услуга"
+                              ItemsSource="{Binding Services}"
+                              DisplayMemberPath="Name"
+                              SelectedValue="{Binding OrderServiceEd.ServiceId}"
+                              SelectedValuePath="ServicesId"
+                              Margin="2"
+                              BorderThickness="1"/>
+
+            </StackPanel>
+        </StackPanel>  
+    </Grid>
+</UserControl>

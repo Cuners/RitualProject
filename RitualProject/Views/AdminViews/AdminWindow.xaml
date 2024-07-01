@@ -11,10 +11,14 @@
         x:Name="window"
         MinWidth="720"
         MinHeight="500"
-        local:WindowCloser.EnableWindowClosing="True">
+        local:WindowCloser.EnableWindowClosing="True"
+        Icon="/Recourses/iconRitual.ico">
     <Window.DataContext>
         <local:AdminViewModelMain/>
     </Window.DataContext>
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="25"/>
+    </WindowChrome.WindowChrome>
     <Window.Resources>
         <local:ByteArrayToBitmapImageConverter x:Name="binaryConverter" x:Key="byteToImageConverter"/>
         <Style x:Key="BtnStyle" TargetType="RadioButton">
@@ -381,6 +385,37 @@
                                     </TextBlock>
                                 </StackPanel>
                             </RadioButton>
+                            <RadioButton Style="{StaticResource BtnStyle}"
+                             x:Name="RadioButtonMessenger"
+                                 Command="{Binding ShowMessengerUserControlCommand}"
+                                >
+                                <StackPanel Orientation="Horizontal" 
+                                    VerticalAlignment="Center" 
+                                    Margin="10,0,0,0">
+                                    <materialDesign:PackIcon Width="40" Height="40"
+                                             Kind="Message"
+                                             
+                                             Margin="0,0,10,0">
+                                        <materialDesign:PackIcon.Style>
+                                            <Style TargetType="materialDesign:PackIcon">
+                                                <Setter Property="Foreground" Value="Gray"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding  ElementName=RadioButtonSettings, Path=IsChecked}" Value="True">
+                                                        <Setter Property="Foreground" Value="#2197f2"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding  ElementName=RadioButtonSettings, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="Foreground" Value="#2197f2"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </materialDesign:PackIcon.Style>
+                                    </materialDesign:PackIcon>
+                                    <TextBlock Text="Чаты"
+                                       Style="{StaticResource TextBlockDashBoard}">
+
+                                    </TextBlock>
+                                </StackPanel>
+                            </RadioButton>
                         </StackPanel>
                         
                     </DockPanel>
@@ -396,14 +431,8 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="130"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal" >
-                        <TextBlock Text="123" 
-                               VerticalAlignment="Center"
-                               FontSize="23"
-                               Margin="20,0,0,0"/>
-                    </StackPanel>
                     <StackPanel Grid.Column="1" 
                             Orientation="Horizontal"
                             >
@@ -426,21 +455,24 @@
 
                     </StackPanel>
                     <StackPanel Grid.Column="2" Orientation="Horizontal"
-                            VerticalAlignment="Top" HorizontalAlignment="Right">
-                        <Button Width="40" Height="25"
-                            Click="ButtonMin_Click"
-                            Padding="0"
-                           >
+                        VerticalAlignment="Top" HorizontalAlignment="Right"
+                                Margin="0,5,5,0">
+                        <Button Width="40" Height="30"
+                                Click="ButtonMin_Click"
+                                WindowChrome.IsHitTestVisibleInChrome="True"
+                                Padding="0" Cursor="Hand">
                             <materialDesign:PackIcon Kind="Minimize"/>
                         </Button>
-                        <Button Width="40" Height="25"
-                            Click="Button_ClickMaxMin"
-                            Padding="0">
+                        <Button Width="40" Height="30"
+                                Click="Button_ClickMaxMin"
+                                WindowChrome.IsHitTestVisibleInChrome="True"
+                                Padding="0" Cursor="Hand">
                             <materialDesign:PackIcon Kind="Maximize" x:Name="MaxMinIcon"/>
                         </Button>
-                        <Button Width="40" Height="25"
-                            Click="Button_ClickClose"
-                            Padding="0">
+                        <Button Width="40" Height="30"
+                                Click="Button_ClickClose"
+                                WindowChrome.IsHitTestVisibleInChrome="True"
+                                Padding="0" Cursor="Hand">
                             <materialDesign:PackIcon Kind="Close"/>
                         </Button>
 
@@ -450,16 +482,14 @@
                 </Grid>
                 <Grid Grid.Row="1" 
                   Background="#ecf4fe">
-                    <ScrollViewer>
-                        <Border Margin="5,5,5,10" 
+                    <Border Margin="5,5,5,10" 
                         Background="#ebeff4"
                         CornerRadius="20"
                         >
-                            <StackPanel>
-                                <ContentControl Content="{Binding CurrentControl}"/>
-                            </StackPanel>
-                        </Border>
-                    </ScrollViewer>
+                        <StackPanel>
+                            <ContentControl Content="{Binding CurrentControl}"/>
+                        </StackPanel>
+                    </Border>
                 </Grid>
 
 

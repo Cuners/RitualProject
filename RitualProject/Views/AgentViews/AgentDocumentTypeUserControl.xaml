@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="RitualProject.AgentDocumentTypeUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RitualProject"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+              d:DataContext="{d:DesignInstance Type=local:AgentOrdersVMList}"
+             Background="White">
+    <UserControl.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatAccentBgButton}">
+            <Setter Property="MinWidth" Value="80"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Margin" Value="0,15,10,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="MinHeight" Value="50"/>
+            <Setter Property="BorderBrush" Value="#ecf4fe"/>
+            <Setter Property="Background" Value="#FFA9CFFF"/>
+            <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="15"/>
+        </Style>
+    </UserControl.Resources>
+   
+    <Grid>
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <Button 
+                     Command="{Binding CreateActDocument}"
+                     CommandParameter="{Binding}"
+                      x:Name="ButtonExit" Content="Акт выполненных работ" Cursor="Hand"
+                     ToolTip="Акт"
+                     />
+            <Button 
+                     Command="{Binding CreateCheckDocument}"
+                     CommandParameter="{Binding}"
+                     Content="Квитанция договор" Cursor="Hand"
+                     ToolTip="Квитанция"
+                     />
+        </StackPanel>
+        
+
+
+    </Grid>
+</UserControl>

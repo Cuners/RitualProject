@@ -1,5 +1,4 @@
 ﻿
-using Azure;
 using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.Win32;
 using Newtonsoft.Json;
@@ -564,8 +563,24 @@ namespace RitualProject
             {
                 return _EditAddProductCommand ?? (_EditAddProductCommand = new RelayCommands(async obj =>
                 {
+                    if (string.IsNullOrWhiteSpace(ProductEd.Name))
+                    {
+                        MessageBox.Show("Вы не ввели наименование");
+                        return;
+                    }
+                    if (ProductEd.Price==0)
+                    {
+                        MessageBox.Show("Вы не ввели цену");
+                        return;
+                    }
+                    if (ProductEd.CategoryId == 0)
+                    {
+                        MessageBox.Show("Вы не выбрали категорию");
+                        return;
+                    }
                     if (WhatNow == "Редактирование продукта")
                     {
+
                         var response = await _apiClient.Client.PutAsync($"{_apiClient.BaseUrl}/api/Product/{ProductEd.ProductId}", new StringContent(JsonConvert.SerializeObject(ProductEd), Encoding.UTF8, "application/json"));
                         response.EnsureSuccessStatusCode();
                         

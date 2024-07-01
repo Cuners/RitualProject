@@ -17,27 +17,28 @@ namespace RitualProject
             BitmapImage img = new BitmapImage();
             using (MemoryStream memStream = new MemoryStream(imageByteArray))
             {
+                memStream.Position = 0;
                 img.BeginInit();
                 img.CacheOption = BitmapCacheOption.OnLoad;
                 img.StreamSource = memStream;
                 img.EndInit();
-                img.Freeze();
-            }
-            return img;
-        }
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            BitmapImage img = new BitmapImage();
-            if (value != null)
-            {
-                img = this.ConvertByteArrayToBitMapImage(value as byte[]);
+                img.Freeze(); // Чтобы сделать BitmapImage доступным для использования из других потоков
             }
             return img;
         }
 
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is byte[] byteArray && byteArray.Length > 0)
+            {
+                return ConvertByteArrayToBitMapImage(byteArray);
+            }
+            return null;
+        }
+
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return null;
+            return null; // Обратное преобразование не реализовано
         }
     }
 }

@@ -19,7 +19,6 @@ namespace RitualProject
             obj.SetValue(EnableWindowClosingProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty EnableWindowClosingProperty =
             DependencyProperty.RegisterAttached("EnableWindowClosingProperty", typeof(bool), typeof(WindowCloser), new PropertyMetadata(false, OnEnableWindowClosingChanged));
 

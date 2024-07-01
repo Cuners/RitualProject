@@ -71,6 +71,12 @@ namespace RitualProject
             {
                 return _EditAddRoleCommand ?? (_EditAddRoleCommand = new RelayCommands(async obj =>
                 {
+                    if (string.IsNullOrWhiteSpace(RoleEd.Role1))
+                    {
+                        MessageBox.Show("Вы не ввели роль");
+                        return;
+                    }
+
                     if (WhatNow == "Редактирование сотрудника")
                     {
                        

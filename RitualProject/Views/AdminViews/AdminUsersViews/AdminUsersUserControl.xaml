@@ -27,7 +27,7 @@
         </Grid.RowDefinitions>
         <StackPanel Background="#ebeff4"
                     Orientation="Vertical">
-            <TextBlock Text="Users" 
+            <TextBlock Text="Пользователи" 
                        FontSize="20"
                        FontWeight="DemiBold"
                        Margin="10,0,0,0"/>
@@ -296,7 +296,7 @@
                             </GridViewColumn>
                             <GridViewColumn>
                                 <GridViewColumn.Header>
-                                    <TextBlock Text="Имя и фамилия"
+                                    <TextBlock Text="ФИО"
                                 FontWeight="Bold"/>
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>

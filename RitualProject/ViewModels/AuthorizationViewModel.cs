@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using RitualServer.Model;
 using System.Net.Http.Json;
 using MaterialDesignThemes.Wpf;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace RitualProject
 {
@@ -64,6 +65,15 @@ namespace RitualProject
         {
             return true;
         }
+        public AuthorizationViewModel()
+        {
+            if (Properties.Settings.Default.Login != "")
+            {
+                Login = Properties.Settings.Default.Login;
+                Password = Properties.Settings.Default.Password;
+                FindUser();
+            }
+        }
         public async Task FindUser()
         {
             try
@@ -91,88 +101,78 @@ namespace RitualProject
                 ErrorLogin = "";
                 var response = await _apiClient.Client.GetAsync($"{_apiClient.BaseUrl}/getArticle");
                 response.EnsureSuccessStatusCode();
-                var userArray = await response.Content.ReadFromJsonAsync<User[]>();
-                
-                foreach (var user in userArray)
+                var userArray = await response.Content.ReadFromJsonAsync<RitualServer.Model.User[]>();
+                var user=userArray.Where(x=>x.Login==Login && x.Password==Password).FirstOrDefault();
+                if (user==null)
                 {
-                    if (user.Login == Login && user.Password == Password)
-                    {
-                        UserInfoConstant.FirstName = user.FirstName;
-                        if (user.Image != null)
-                        {
-                            UserInfoConstant.Image = user.Image;
-                        }
-                        if(user.RoleId == 1)
-                        {
-                            Application.Current.Dispatcher.Invoke(() =>
-                            {
-                                //AdminWindow admin = new AdminWindow();
-                                //admin.Show();
-                                ManagerWindow managerWindow = new ManagerWindow();
-                                managerWindow.Show();
-                                CloseWindow();  
-                                return;
-                            });
-
-                        }
-                        else if (user.RoleId == 2)
-                        {
-                            Application.Current.Dispatcher.Invoke(() =>
-                            {
-                                //AdminWindow admin = new AdminWindow();
-                                //admin.Show();
-                                ManagerWindow managerWindow = new ManagerWindow();
-                                managerWindow.Show();
-                                CloseWindow();
-                                return;
-                            });
-
-                        }
-                        else if (user.RoleId == 3)
-                        {
-                            Application.Current.Dispatcher.Invoke(() =>
-                            {
-                                //AdminWindow admin = new AdminWindow();
-                                //admin.Show();
-                                ManagerWindow managerWindow = new ManagerWindow();
-                                managerWindow.Show();
-                                CloseWindow();
-                                return;
-                            });
-
-                        }
-                        else if (user.RoleId == 4)
-                        {
-                            Application.Current.Dispatcher.Invoke(() =>
-                            {
-                                //AdminWindow admin = new AdminWindow();
-                                //admin.Show();
-                                StorekeeperWindow storekeeperWindow = new StorekeeperWindow();
-                                storekeeperWindow.Show();
-                                CloseWindow();
-                                return;
-                            });
-
-                        }
-                        else if (user.RoleId == 5)
-                        {
-                            Application.Current.Dispatcher.Invoke(() =>
-                            {
-                                AdminWindow admin = new AdminWindow();
-                                admin.Show();
-                                CloseWindow();
-                                return;
-                            });
-
-                        }
-
-                    }
+                    ErrorLogin = "Не верный логин или пароль";
+                    return;
                 }
-                //AdminWindow admin = new AdminWindow();
-                //admin.Show();
-                //StorekeeperWindow storekeeperWindow=new StorekeeperWindow();
-                //storekeeperWindow.Show();
-                ErrorLogin = "Не верный логин или пароль";
+                UserInfoConstant.FirstName = user.FirstName;
+                UserInfoConstant.FullName = user.FirstName + " " + user.LastName;
+                UserInfoConstant.ID = user.UserId;
+                if (user.Image != null)
+                {
+                    UserInfoConstant.Image = user.Image;
+                }
+                Properties.Settings.Default.Login = user.Login;
+                Properties.Settings.Default.Password = user.Password;
+                Properties.Settings.Default.Save();
+                if (user.RoleId == 1)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        ManagerWindow managerWindow = new ManagerWindow();
+                        managerWindow.Show();
+                        CloseWindow();
+                        return;
+                    });
+
+                }
+                else if (user.RoleId == 2)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        AgentWindow agentWindow = new AgentWindow();
+                        agentWindow.Show();
+                        CloseWindow();
+                        return;
+                    });
+
+                }
+                else if (user.RoleId == 3)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        WorkerWindow workerWindow = new WorkerWindow();
+                        workerWindow.Show();
+                        CloseWindow();
+                        return;
+                    });
+
+                }
+                else if (user.RoleId == 4)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+
+                        StorekeeperWindow storekeeperWindow = new StorekeeperWindow();
+                        storekeeperWindow.Show();
+                        CloseWindow();
+                        return;
+                    });
+                }
+                else if (user.RoleId == 5)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        AdminWindow admin = new AdminWindow();
+                        admin.Show();
+                        CloseWindow();
+                        return;
+                    });
+
+                }
             }
                
             catch (Exception ex)

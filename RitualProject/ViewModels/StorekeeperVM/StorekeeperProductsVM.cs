@@ -61,8 +61,8 @@ namespace RitualProject
             get { return _quantity; }
             set => Set(ref _quantity, value);
         }
-        private string _price;
-        public string Price
+        private double _price;
+        public double Price
         {
             get { return _price; }
             set => Set(ref _price, value);
@@ -160,6 +160,11 @@ namespace RitualProject
             {
                 return _AddInventarization ?? (_AddInventarization = new RelayCommands(async obj =>
                 {
+                    if (IdWareHouse == 0)
+                    {
+                        MessageBox.Show("Выберите товар");
+                        return;
+                    }
                     InventarizationDTO dto = new InventarizationDTO()
                     {
                         CompositionID = IdWareHouse,
@@ -182,12 +187,10 @@ namespace RitualProject
             {
                 return _MinusInventarization ?? (_MinusInventarization = new RelayCommands(async obj =>
                 {
-                   
                         if (InventarizationDTSelectedItem != null)
                         {
                             InventarizationDTO.Remove(InventarizationDTSelectedItem);
                         }
-                    
                 }));
             }
         }
@@ -199,11 +202,10 @@ namespace RitualProject
             {
                 return _CreateDocument ?? (_CreateDocument = new RelayCommands(async obj =>
                 {
-
                     if (InventarizationDTO != null)
                     {
                         DocumentGeneratorInvent documentGeneratorInvent = new DocumentGeneratorInvent();
-                        documentGeneratorInvent.GenerateDocument(InventarizationDTO,"Абобус");
+                        documentGeneratorInvent.GenerateDocument(InventarizationDTO,UserInfoConstant.FullName);
                         InventarizationDTO.Clear();
                     }
 

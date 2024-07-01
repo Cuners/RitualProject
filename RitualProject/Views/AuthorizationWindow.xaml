@@ -6,11 +6,13 @@
         xmlns:local="clr-namespace:RitualProject"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="460" Width="800"
+         Height="460" Width="800"
         MinWidth="750"
         MinHeight="340"
         WindowStartupLocation="CenterScreen"
-        local:WindowCloser.EnableWindowClosing="True">
+        Title="Авторизация"
+        local:WindowCloser.EnableWindowClosing="True"
+        Icon="/Recourses/iconRitual.ico">
     <Window.Resources>
         <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFilledTextBox}" x:Key="TextBoxAuth">
             <Setter Property="Foreground" Value="Black"/>

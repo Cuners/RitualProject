@@ -56,12 +56,11 @@
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30"/>
-
                                             <RowDefinition Height="30"/>
                                             <RowDefinition Height="30"/>
                                             <RowDefinition Height="30"/>
 
-                                        </Grid.RowDefinitions>
+                                    </Grid.RowDefinitions>
                                         <TextBlock Grid.Row="0" Grid.Column="0"
                                                     Text="Имя"
                                                  Style="{StaticResource TextBlockEdit}"/>
@@ -79,7 +78,15 @@
                                          Text="{Binding UserEd.LastName}"
                                         Margin="2"
                                         BorderThickness="1"/>
-
+                                    <TextBlock Grid.Row="2" Grid.Column="0"
+                                                    Text="Отчество"
+                                                    Style="{StaticResource TextBlockEdit}"/>
+                                    <TextBox Grid.Column="1"
+                                        Grid.Row="2"
+                                          materialDesign:HintAssist.Hint="Отчество"
+                                         Text="{Binding UserEd.SurName}"
+                                        Margin="2"
+                                        BorderThickness="1"/>
                                     <TextBlock Grid.Row="3" Grid.Column="0"
                                                     Text="Роль"
                                                     Style="{StaticResource TextBlockEdit}"/>
@@ -99,40 +106,40 @@
                                             <ColumnDefinition Width="180"/>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="30"
-                       />
-                                            <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+
+                                        <RowDefinition Height="30"/>
                                             <RowDefinition Height="30"/>
                                             <RowDefinition Height="30"/>
 
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Row="0" Grid.Column="0"
-               Text="Email"
-               Style="{StaticResource TextBlockEdit}"/>
+                                                   Text="Email"
+                                                   Style="{StaticResource TextBlockEdit}"/>
                                         <TextBox Grid.Column="1"
                                           materialDesign:HintAssist.Hint="Asd@mail.ru"
                                          Text="{Binding UserEd.Email}"
-             BorderThickness="1"
-             Margin="2"/>
+                                                 BorderThickness="1"
+                                                 Margin="2"/>
                                         <TextBlock Grid.Row="1" Grid.Column="0"
-               Text="Телефон"
-               Style="{StaticResource TextBlockEdit}"/>
+                                                   Text="Телефон"
+                                                   Style="{StaticResource TextBlockEdit}"/>
                                         <TextBox Grid.Column="1"
                                           materialDesign:HintAssist.Hint="+79172843540"
                                          Text="{Binding UserEd.Phone}"
-             Grid.Row="1"
-             Margin="2"
-             BorderThickness="1"
+                                         Grid.Row="1"
+                                         Margin="2"
+                                         BorderThickness="1"
                                      />
                                         <TextBlock Grid.Row="2" Grid.Column="0"
-               Text="Адрес"
-               Style="{StaticResource TextBlockEdit}"/>
+                                                   Text="Адрес"
+                                                   Style="{StaticResource TextBlockEdit}"/>
                                         <TextBox Grid.Column="1"
                                           materialDesign:HintAssist.Hint="Адрес"
                                          Text="{Binding UserEd.Adress}"
-             Grid.Row="2"
-             Margin="2"
-             BorderThickness="1"/>
+                                         Grid.Row="2"
+                                         Margin="2"
+                                         BorderThickness="1"/>
                                         <TextBlock Grid.Row="3" Grid.Column="0"
                                         Text="Логин"
                                         Style="{StaticResource TextBlockEdit}"/>
@@ -149,64 +156,48 @@
 
 
                         </StackPanel>
-                        <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="10">
-                            <Button d:DataContext="{d:DesignInstance Type=local:AdminViewModelList}" Width="200" Height="260"
+                    <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="10">
+                        <Button d:DataContext="{d:DesignInstance Type=local:AdminViewModelList}" Width="200" Height="260"
                                     Background="Transparent"
                                     Padding="0"
                                     Command="{Binding OpenImageHeroIcon}"
                                     CommandParameter="{Binding}" Cursor="Hand">
-                                <Image Width="200"
+                            <Image Width="200"
                                Height="260"
                                Source="{Binding Image, Converter={StaticResource byteToImageConverter}}" OpacityMask="Black"></Image>
 
-                            </Button>
-                            <TextBlock Grid.Row="3" Grid.Column="0"
+                        </Button>
+                        <TextBlock Grid.Row="3" Grid.Column="0"
                             Text="Пароль"
                             Style="{StaticResource TextBlockEdit}"/>
-                            <PasswordBox Grid.Column="1"
+                        <PasswordBox Grid.Column="1"
                                  Style="{StaticResource MaterialDesignRevealPasswordBox}"
                                  materialDesign:HintAssist.Hint="Пароль"
                                  materialDesign:PasswordBoxAssist.Password="{Binding UserEd.Password}"
                                  Padding="2"
-                            Grid.Row="3"
-                            BorderThickness="1"
-                            Margin="2"/>
+                                Grid.Row="3"
+                                BorderThickness="1"
+                                Margin="2"/>
 
-                            <Button  MinWidth="80" 
+                        <Button  MinWidth="80" 
             
-             Style="{StaticResource MaterialDesignFlatAccentBgButton}"  
-             materialDesign:ButtonAssist.CornerRadius="15"
+                                     Style="{StaticResource MaterialDesignFlatAccentBgButton}"  
+                                     materialDesign:ButtonAssist.CornerRadius="15"
                                      Command="{Binding EditAddUserCommand}"
                                      CommandParameter="{Binding}"
-             Margin="0,15,0,0"
-              x:Name="ButtonExit" Content="Сохранить" Cursor="Hand"
-             ToolTip="Сохранить"
-             FontSize="13"
-             MinHeight="50"
-             materialDesign:ShadowAssist.ShadowDepth="Depth0"
-             BorderBrush="#ecf4fe"
-             Background="#FFA9CFFF"/>
+                                     Margin="0,15,0,0"
+                                     x:Name="ButtonExit" Content="Сохранить" Cursor="Hand"
+                                     ToolTip="Сохранить"
+                                     FontSize="13"
+                                     MinHeight="50"
+                                     materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                                     BorderBrush="#ecf4fe"
+                                     Background="#FFA9CFFF"/>
 
-                        </StackPanel>
-                        <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,0,0,0"
-                        VerticalAlignment="Top"
-                        DockPanel.Dock="Bottom">
-                <Button Command="{Binding AuthCommand,ValidatesOnDataErrors=True}" MinWidth="80" 
-             CommandParameter="{Binding ElementName=txtPass}"
-             Style="{StaticResource MaterialDesignFlatAccentBgButton}"  
-             materialDesign:ButtonAssist.CornerRadius="15"
-             Margin="0,15,0,0"
-              x:Name="ButtonExit" Content="Сохранить" Cursor="Hand"
-             ToolTip="Сохранить"
-             FontSize="13"
-             MinHeight="50"
-             materialDesign:ShadowAssist.ShadowDepth="Depth0"
-             BorderBrush="#ecf4fe"
-             Background="#FFA9CFFF"/>
+                    </StackPanel>
 
-            </StackPanel>-->
 
-                    </DockPanel>
+                </DockPanel>
                 </Border>
             </StackPanel>
 

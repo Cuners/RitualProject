@@ -25,9 +25,9 @@ namespace RitualProject
                 AddInventoryInfo(doc,inventarization);
                 SaveDocument(doc);
             }
-            catch
+            catch (Exception ex)
             {
-
+                MessageBox.Show("Ошибка при создании документа: " + ex.Message);
             }
             finally
             {
@@ -59,14 +59,13 @@ namespace RitualProject
             Paragraph companyInfoTitle = doc.Paragraphs.Add();
             companyInfoTitle.Range.Text = "Информация о компании:";
             companyInfoTitle.Range.Font.Size = 14;
-            companyInfoTitle.Range.Font.Bold = 1;
             companyInfoTitle.Range.InsertParagraphAfter();
 
             Paragraph companyInfo = doc.Paragraphs.Add();
-            companyInfo.Range.Text = "Название компании: Ритуал\n" +
-                                     "Адрес: ул.Декабистов 55\n" +
-                                     "Телефон: +8 927 325 49 50]\n" +
-                                     "E-mail: ads@mail.ru\n" +
+            companyInfo.Range.Text = "Название компании: Ритуальник\n" +
+                                     "Адрес: ул.Декабистов 10\n" +
+                                     "Телефон: +8 800 888 88 88]\n" +
+                                     "E-mail: marat-559@mail.ru\n" +
                                      "Ответственное лицо за отчет: " 
                                      + name +"\n";
             companyInfo.Range.InsertParagraphAfter();
@@ -77,7 +76,6 @@ namespace RitualProject
             Paragraph inventoryInfoTitle = doc.Paragraphs.Add();
             inventoryInfoTitle.Range.Text = "Информация об инвентаре:";
             inventoryInfoTitle.Range.Font.Size = 14;
-            inventoryInfoTitle.Range.Font.Bold = 1;
             inventoryInfoTitle.Range.InsertParagraphAfter();
 
             // Создаем таблицу после добавления заголовка
@@ -152,9 +150,6 @@ namespace RitualProject
                 string directory = folderBrowserDialog.SelectedPath;
                 string fileName = "Отчет_об_инвентаризации.docx";
                 string filePath = Path.Combine(directory, fileName);
-
-                // Дальше код сохранения файла остается без изменений
-
                 int count = 1;
                 while (File.Exists(filePath))
                 {

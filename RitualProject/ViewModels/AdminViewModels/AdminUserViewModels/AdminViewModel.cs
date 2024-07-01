@@ -138,6 +138,7 @@ namespace RitualProject
             //{
             //    RoleStatistics.Add(new UserRoleStatistics { RoleName = role.RoleName, UserCount = role.UserCount });
             //}
+            RoleStatistics.Clear();
             var roleCounts = Roles
                 .Select(roleName => new
                     {
@@ -185,12 +186,21 @@ namespace RitualProject
             {
                 return _DeleteUserCommand ?? (_DeleteUserCommand = new RelayCommands(async obj =>
                 {
-                   var UserToRemove = obj as UserWithRole;
-                    if (UserToRemove != null)
+                    try
                     {
-                        Users.Remove(UserToRemove);
-                        ResultUsers.Remove(UserToRemove);
-                        GetRoleStatistics();
+                        var UserToRemove = obj as UserWithRole;
+                        if (UserToRemove != null)
+                        {
+                            Users.Remove(UserToRemove);
+                            ResultUsers.Remove(UserToRemove);
+                            //var response = await _apiClient.Client.DeleteAsync($"{_apiClient.BaseUrl}/api/User/{UserToRemove.UserId}");
+                            //response.EnsureSuccessStatusCode();
+                            GetRoleStatistics();
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
                     }
                 }));
             }

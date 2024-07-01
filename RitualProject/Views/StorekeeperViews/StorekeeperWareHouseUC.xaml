@@ -38,7 +38,7 @@
                                />
                 </TabItem.Header>
                 <TabItem.Content>
-                    <Border Style="{StaticResource StackPanelBorder}"  Grid.Row="1" Margin="10,10,1,10">
+                    <Border Style="{StaticResource StackPanelBorder}" Margin="10,10,1,10">
                         <Grid Background="White">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="47"/>
@@ -75,7 +75,6 @@
                                      SelectedItem="{Binding WareHouseSelectedItem}"
                                      Background="#ebeff4"
                                      Margin="5" Grid.Row="1"
-                                     
                                      >
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -192,9 +191,7 @@
                                             CommandParameter="{Binding}">
                                         <materialDesign:PackIcon Kind="Minus"/>
                                     </Button>
-                                    <Button Margin="5">
-                                        <materialDesign:PackIcon Kind="Add"/>
-                                    </Button>
+                                 
                                 </StackPanel>
                                 
                             </DockPanel>

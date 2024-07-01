@@ -6,17 +6,20 @@
         xmlns:local="clr-namespace:RitualProject"
         mc:Ignorable="d"
         Title="ManagerProductsAddEditWindow" 
-        Height="650" 
-        Width="1100"
+        Height="600" 
+        Width="1000"
         MinWidth="1050"
         MinHeight="600"
         MaxWidth="1200"
-        MaxHeight="700"
+        MaxHeight="600"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         WindowStartupLocation="CenterScreen"
          d:DataContext="{d:DesignInstance Type=local:ManagerProductsVMList}"
         x:Name="window"
         local:WindowCloser.EnableWindowClosing="True">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="25"/>
+    </WindowChrome.WindowChrome>
     <Window.Resources>
         <local:ByteArrayToBitmapImageConverter x:Name="binaryConverter" x:Key="byteToImageConverter"/>
     </Window.Resources>
@@ -49,6 +52,7 @@
                         <Button Width="30" Height="25"
                             x:Name="ButtonMin"
                         Click="ButtonMin_Click"
+                                WindowChrome.IsHitTestVisibleInChrome="True"
                             Margin="5"
                         Padding="0">
                             <materialDesign:PackIcon Kind="Minimize"/>
@@ -57,6 +61,7 @@
                         <Button Width="30" Height="25"
                             x:Name="ButtonClose"
                        Click="ButtonClose_Click"
+                                WindowChrome.IsHitTestVisibleInChrome="True"
                             Margin="5"
                         Padding="0">
                             <materialDesign:PackIcon Kind="Close"/>

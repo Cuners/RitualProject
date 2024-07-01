@@ -22,12 +22,12 @@
 
     <Grid Background="#ebeff4">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <StackPanel Background="#ebeff4"
                 Orientation="Vertical">
-            <TextBlock Text="Users" 
+            <TextBlock Text="Продукты" 
                    FontSize="20"
                    FontWeight="DemiBold"
                    Margin="10,0,0,0"/>
@@ -35,38 +35,48 @@
                    HorizontalAlignment="Center">
 
                 <Border BorderBrush="LightGray"
-                    BorderThickness="1"
-                    Padding="5"
-                    CornerRadius="3"
-                    Background="White"
-                    Margin="5"> 
+                        BorderThickness="1"
+                        Padding="5"
+                        CornerRadius="3"
+                        Background="White"
+                        Margin="5"> 
                     <DockPanel Width="180" Height="70">
                                     <materialDesign:PackIcon Kind="CardsDiamond"
-                                         Foreground="#2197f2"
-                                         VerticalAlignment="Center"
-                                         Width="30"
-                                         Height="30"/>
-                                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <TextBlock Text="Монументы" Style="{StaticResource TextBlockStatistics}" Margin="0,0,3,0"/>
-                                        <TextBlock Text="{Binding CountMonuments}" Style="{StaticResource TextBlockStatistics}"/>
+                                                             Foreground="#2197f2"
+                                                             VerticalAlignment="Center"
+                                                             Width="30"
+                                                             Height="30"/>
+                                    <StackPanel DockPanel.Dock="Right" 
+                                                Orientation="Horizontal" 
+                                                HorizontalAlignment="Right">
+                                        <TextBlock Text="Монументы" 
+                                                   Style="{StaticResource TextBlockStatistics}" 
+                                                   Margin="0,0,3,0"/>
+                                        <TextBlock Text="{Binding CountMonuments}" 
+                                                   Style="{StaticResource TextBlockStatistics}"/>
                                     </StackPanel>
                                 </DockPanel>
                 </Border>
                 <Border BorderBrush="LightGray"
-                    BorderThickness="1"
-                    Padding="5"
-                    CornerRadius="3"
-                    Background="White"
-                    Margin="5">
+                        BorderThickness="1"
+                        Padding="5"
+                        CornerRadius="3"
+                        Background="White"
+                        Margin="5">
                     <DockPanel Width="180" Height="70">
                         <materialDesign:PackIcon Kind="Cross"
                                          Foreground="#2197f2"
                                          VerticalAlignment="Center"
                                          Width="30"
                                          Height="30"/>
-                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <TextBlock Text="Кресты" Style="{StaticResource TextBlockStatistics}" Margin="0,0,3,0"/>
-                            <TextBlock Text="{Binding CountCrosses}" Style="{StaticResource TextBlockStatistics}"/>
+                        <StackPanel DockPanel.Dock="Right" 
+                                    Orientation="Horizontal" 
+                                    HorizontalAlignment="Right">
+                            <TextBlock Text="Кресты" 
+                                       Style="{StaticResource TextBlockStatistics}" 
+                                       Margin="0,0,3,0"/>
+                            <TextBlock Text="{Binding CountCrosses}" 
+                                       Style="{StaticResource TextBlockStatistics}"/>
                         </StackPanel>
                     </DockPanel>
                 </Border>
@@ -82,9 +92,14 @@
                                          VerticalAlignment="Center"
                                          Width="30"
                                          Height="30"/>
-                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <TextBlock Text="Одежда" Style="{StaticResource TextBlockStatistics}" Margin="0,0,3,0"/>
-                            <TextBlock Text="{Binding CountClothe}" Style="{StaticResource TextBlockStatistics}"/>
+                        <StackPanel DockPanel.Dock="Right" 
+                                    Orientation="Horizontal" 
+                                    HorizontalAlignment="Right">
+                            <TextBlock Text="Одежда" 
+                                       Style="{StaticResource TextBlockStatistics}" 
+                                       Margin="0,0,3,0"/>
+                            <TextBlock Text="{Binding CountClothe}" 
+                                       Style="{StaticResource TextBlockStatistics}"/>
                         </StackPanel>
                     </DockPanel>
                 </Border>
@@ -101,8 +116,11 @@
                                          Width="30"
                                          Height="30"/>
                         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <TextBlock Text="Гробы" Style="{StaticResource TextBlockStatistics}" Margin="0,0,3,0"/>
-                            <TextBlock Text="{Binding CountCoffins}" Style="{StaticResource TextBlockStatistics}"/>
+                            <TextBlock Text="Гробы" 
+                                       Style="{StaticResource TextBlockStatistics}" 
+                                       Margin="0,0,3,0"/>
+                            <TextBlock Text="{Binding CountCoffins}" 
+                                       Style="{StaticResource TextBlockStatistics}"/>
                         </StackPanel>
                     </DockPanel>
                 </Border>
@@ -119,8 +137,11 @@
                                          Width="30"
                                          Height="30"/>
                         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <TextBlock Text="Ленты" Style="{StaticResource TextBlockStatistics}" Margin="0,0,3,0"/>
-                            <TextBlock Text="{Binding CountTapes}" Style="{StaticResource TextBlockStatistics}"/>
+                            <TextBlock Text="Ленты" 
+                                       Style="{StaticResource TextBlockStatistics}" 
+                                       Margin="0,0,3,0"/>
+                            <TextBlock Text="{Binding CountTapes}" 
+                                       Style="{StaticResource TextBlockStatistics}"/>
                         </StackPanel>
                     </DockPanel>
                 </Border>
@@ -137,20 +158,20 @@
                        FontSize="16"/>
                     <Separator Background="LightGray"/>
                     <Button Style="{StaticResource MaterialDesignFlatAccentBgButton}"  
-                        materialDesign:ButtonAssist.CornerRadius="15"
+                            materialDesign:ButtonAssist.CornerRadius="15"
                         
-                        Margin="10,5,0,0"
-                        x:Name="ButtonExit" Content="Создать новый продукт" Cursor="Hand"
-                        ToolTip="Создать нового пользователя"
-                        FontSize="13"
-                        MinHeight="40"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Left"
-                        materialDesign:ShadowAssist.ShadowDepth="Depth0"
-                        Command="{Binding EditProductCommand}"
-                        CommandParameter="{Binding}"
-                        BorderBrush="LightBlue"
-                        Background="#FFA9CFFF"/>
+                            Margin="10,5,0,0"
+                            x:Name="ButtonExit" Content="Создать новый продукт" Cursor="Hand"
+                            ToolTip="Создать нового пользователя"
+                            FontSize="13"
+                            MinHeight="40"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                            Command="{Binding EditProductCommand}"
+                            CommandParameter="{Binding}"
+                            BorderBrush="LightBlue"
+                            Background="#FFA9CFFF"/>
                 </StackPanel>
 
             </Border>
@@ -158,9 +179,16 @@
         </StackPanel>
 
 
-        <Border Style="{StaticResource StackPanelBorder}"  Grid.Row="1" Margin="10,10,10,10">
-            <StackPanel Background="White">
-                <Grid Margin="10">
+        <Border Style="{StaticResource StackPanelBorder}"  
+                Grid.Row="1" 
+                Margin="10,10,10,10">
+            <Grid Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Margin="10" Background="White"
+                      Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
 
@@ -174,26 +202,24 @@
                             
                             >
                         <materialDesign:PackIcon Grid.Column="1" Kind="Search"
-                     VerticalAlignment="Center" HorizontalAlignment="Right"
-                     Width="26"
-                     Height="26"
-                     BorderThickness="1,1,0,1"
-                     BorderBrush="Gray"
-                     Background="#ebeff4"
-                     />
+                                                 VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                 Width="26"
+                                                 Height="26"
+                                                 BorderThickness="1,1,0,1"
+                                                 BorderBrush="Gray"
+                                                 Background="#ebeff4"/>
                         <TextBox Text="{Binding SearchProductByName,UpdateSourceTrigger=PropertyChanged}"
                              BorderThickness="1" 
                              materialDesign:HintAssist.Hint="Поиск"
-                             Padding="5,5,0,0"
-                             />
+                             Padding="5,5,0,0"/>
                     </DockPanel>
                 </Grid>
 
 
-                <ListView ItemsSource="{Binding Products}" Style="{StaticResource MaterialDesignListView}"
-                          materialDesign:ListViewAssist.HeaderRowBackground="LightGray"
-                            
-                            >
+                <ListView Grid.Row="1" 
+                          ItemsSource="{Binding Products}" 
+                          Style="{StaticResource MaterialDesignListView}"
+                          materialDesign:ListViewAssist.HeaderRowBackground="LightGray">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Vertical"/>
@@ -288,7 +314,7 @@
 
 
 
-            </StackPanel>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

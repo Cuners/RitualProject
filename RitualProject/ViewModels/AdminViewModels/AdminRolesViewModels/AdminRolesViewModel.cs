@@ -116,13 +116,20 @@ namespace RitualProject
             {
                 return _DeleteRoleCommand ?? (_DeleteRoleCommand = new RelayCommands(async obj =>
                 {
-                    var RoleToRemove = obj as Role;
-                    if (RoleToRemove != null)
+                    try
                     {
-                        Roles.Remove(RoleToRemove);
-                        ResultRoles.Remove(RoleToRemove);
-                        var response = await _apiClient.Client.DeleteAsync($"{_apiClient.BaseUrl}/api/Role/{RoleToRemove.RolesId}");
-                        response.EnsureSuccessStatusCode();
+                        var RoleToRemove = obj as Role;
+                        if (RoleToRemove != null)
+                        {
+                            Roles.Remove(RoleToRemove);
+                            ResultRoles.Remove(RoleToRemove);
+                            var response = await _apiClient.Client.DeleteAsync($"{_apiClient.BaseUrl}/api/Role/{RoleToRemove.RolesId}");
+                            response.EnsureSuccessStatusCode();
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
                     }
                 }));
             }

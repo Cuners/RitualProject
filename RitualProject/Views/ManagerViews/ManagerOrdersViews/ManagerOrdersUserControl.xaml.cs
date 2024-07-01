@@ -11,7 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+
+using System.IO;
+using System.Reflection;
 
 namespace RitualProject
 {
@@ -30,7 +32,9 @@ namespace RitualProject
         private async void WebView_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
         {
             await webView.EnsureCoreWebView2Async();
-            webView.CoreWebView2.Navigate("C:\\Users\\marat\\Downloads\\map.html");
+            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string filePath = System.IO.Path.Combine(currentDirectory, "Maps" , "map.html");
+            webView.CoreWebView2.Navigate(filePath);
         }
 
         private async void MoveToAddress(object sender, string address)

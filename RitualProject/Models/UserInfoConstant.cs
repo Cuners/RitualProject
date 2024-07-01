@@ -9,6 +9,8 @@ namespace RitualProject
     public static class UserInfoConstant
     {
         public static string FirstName {get;set;}
+        public static string FullName {get;set;}
         public static byte[]? Image { get; set; } = null;
+        public static int ID { get; set; }
     }
 }

@@ -14,7 +14,9 @@
         WindowStartupLocation="CenterScreen"
         x:Name="window"
         local:WindowCloser.EnableWindowClosing="True">
-    
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="25"/>
+    </WindowChrome.WindowChrome>
     <Grid Background="#ebeff4">
         
         <StackPanel>
@@ -43,6 +45,7 @@
                         <Button Width="30" Height="25"
                                 x:Name="ButtonMin"
                             Click="ButtonMin_Click"
+                                WindowChrome.IsHitTestVisibleInChrome="True"
                                 Margin="5"
                             Padding="0">
                             <materialDesign:PackIcon Kind="Minimize"/>
@@ -51,6 +54,7 @@
                         <Button Width="30" Height="25"
                                 x:Name="ButtonClose"
                            Click="ButtonClose_Click"
+                                WindowChrome.IsHitTestVisibleInChrome="True"
                                 Margin="5"
                             Padding="0">
                             <materialDesign:PackIcon Kind="Close"/>

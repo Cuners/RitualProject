@@ -31,6 +31,7 @@ namespace RitualProject
             return true;
         }
         private UserControl _StoreKeeperProductsUserControl;
+        private UserControl _MessengerUserControl;
         private UserControl currentControl;
         public UserControl CurrentControl
         {
@@ -59,6 +60,19 @@ namespace RitualProject
                 }));
             }
         }
+        private RelayCommands _ShowMessengerUserControlCommand;
+
+        public RelayCommands ShowMessengerUserControlCommand
+        {
+            get
+            {
+                return _ShowMessengerUserControlCommand ?? (_ShowMessengerUserControlCommand = new RelayCommands(async obj =>
+                {
+                    _MessengerUserControl = new MessengerMainUserControl();
+                    CurrentControl = _MessengerUserControl;
+                }));
+            }
+        }
         private RelayCommands _CloseWindow;
 
         public RelayCommands CloseWindowNow
@@ -68,6 +82,9 @@ namespace RitualProject
                 return _CloseWindow ?? (_CloseWindow = new RelayCommands(async obj =>
                 {
 
+                    Properties.Settings.Default.Login = "";
+                    Properties.Settings.Default.Password = "";
+                    Properties.Settings.Default.Save();
                     MainWindow main = new MainWindow();
                     main.Show();
                     CloseWindow();

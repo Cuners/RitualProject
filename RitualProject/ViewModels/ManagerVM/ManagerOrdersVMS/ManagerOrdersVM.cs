@@ -16,7 +16,8 @@ namespace RitualProject
         private readonly ApiClient _apiClient = new ApiClient();
         public event EventHandler<string> MoveToAddress;
         public string Adres {  get; set; }
-        public ObservableCollection<Order> ResultOrders { get; set; }
+        public ObservableCollection<ClientOrder> ResultOrders { get; set; }
+        public ObservableCollection<ClientOrder> ClientOrders { get; set; }
         public Shipment Shipments { get; set; }
         private ObservableCollection<Order> _orders;
         public ObservableCollection<Order> Orders
@@ -24,8 +25,8 @@ namespace RitualProject
             get { return _orders; }
             set => Set(ref _orders, value);
         }
-        private Order _selectedOrder;
-        public Order SelectedOrder
+        private ClientOrder _selectedOrder;
+        public ClientOrder SelectedOrder
         {
             get { return _selectedOrder; }
             set
@@ -34,7 +35,7 @@ namespace RitualProject
                 if (SelectedOrder != null)
                 {
                     OnPropertyChanged("SelectedOrder");
-                    foreach(var selected in SelectedOrder.Shipments)
+                    foreach(var selected in SelectedOrder.Orders.Shipments)
                     {
                         Shipments=selected;
                     }
@@ -49,11 +50,17 @@ namespace RitualProject
             string address = Adres.Replace("'", "\\'");
             MoveToAddress?.Invoke(this, address);
         }
-        public ManagerOrdersVM()
+        private async Task InitializeAsync()
         {
             Orders = new ObservableCollection<Order>();
-            ResultOrders = new ObservableCollection<Order>();
-            LoadDataAsync();
+            ResultOrders = new ObservableCollection<ClientOrder>();
+            ClientOrders = new ObservableCollection<ClientOrder>();
+            await LoadDataAsync();
+            await LoadClientOrderDataAsync();
+        }
+        public ManagerOrdersVM()
+        {
+            InitializeAsync();
         }
         public async Task LoadDataAsync()
         {
@@ -68,6 +75,26 @@ namespace RitualProject
                 foreach (var role in roleArray)
                 {
                     Orders.Add(role);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки ролей: {ex.Message}");
+            }
+        }
+        public async Task LoadClientOrderDataAsync()
+        {
+            try
+            {
+
+                var response = await _apiClient.Client.GetAsync($"{_apiClient.BaseUrl}/getClientOrders");
+                response.EnsureSuccessStatusCode();
+                var roleArray = await response.Content.ReadFromJsonAsync<ClientOrder[]>();
+                ClientOrders.Clear();
+                foreach (var role in roleArray)
+                {
+                    ClientOrders.Add(role);
                     ResultOrders.Add(role);
                 }
 
@@ -77,22 +104,55 @@ namespace RitualProject
                 MessageBox.Show($"Ошибка загрузки ролей: {ex.Message}");
             }
         }
+        private RelayCommands _DeleteOrderCommand;
 
-        private RelayCommands _DeleteRoleCommand;
-
-        public RelayCommands DeleteRoleCommand
+        public RelayCommands DeleteOrderCommand
         {
             get
             {
-                return _DeleteRoleCommand ?? (_DeleteRoleCommand = new RelayCommands(async obj =>
+                return _DeleteOrderCommand ?? (_DeleteOrderCommand = new RelayCommands(async obj =>
                 {
-                    var RoleToRemove = obj as Role;
-                    if (RoleToRemove != null)
+                    try
                     {
-                        //.Remove(RoleToRemove);
-                        //ResultRoles.Remove(RoleToRemove);
-                        //var response = await _apiClient.Client.DeleteAsync($"{_apiClient.BaseUrl}/api/Role/{RoleToRemove.RolesId}");
-                        //response.EnsureSuccessStatusCode();
+                        var OrderToRemove = obj as ClientOrder;
+                        if (OrderToRemove != null)
+                        {
+                            var response = await _apiClient.Client.DeleteAsync($"{_apiClient.BaseUrl}/api/Order/{OrderToRemove.OrderID}");
+                            response.EnsureSuccessStatusCode();
+                            ClientOrders.Remove(OrderToRemove);
+                            ResultOrders.Remove(OrderToRemove);
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }));
+            }
+        }
+        private RelayCommands _EditOrderCommand;
+        public RelayCommands EditOrderCommand
+        {
+            get
+            {
+                return _EditOrderCommand ?? (_EditOrderCommand = new RelayCommands(async obj =>
+                {
+                    var ClientOrders = obj as ClientOrder;
+                    if (ClientOrders != null)
+                    {
+                        var response = await _apiClient.Client.GetAsync($"{_apiClient.BaseUrl}/api/ClientOrder/{ClientOrders.ClientOrdersID}");
+                        response.EnsureSuccessStatusCode();
+                        var orderArray = await response.Content.ReadFromJsonAsync<ClientOrder>();
+
+                        ManagerOrdersVMList orderViewModel = new ManagerOrdersVMList(orderArray) { ManagerViewModel = this };
+                        ManagerOrderAddEditWindow orderWindow = new ManagerOrderAddEditWindow(orderViewModel);
+                        orderWindow.ShowDialog();
+                    }
+                    else
+                    {
+                        ManagerOrdersVMList orderViewModel = new ManagerOrdersVMList(null) { ManagerViewModel = this };
+                        ManagerOrderAddEditWindow orderWindow = new ManagerOrderAddEditWindow(orderViewModel);
+                        orderWindow.ShowDialog();
                     }
                 }));
             }

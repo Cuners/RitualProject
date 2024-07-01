@@ -135,6 +135,12 @@ namespace RitualProject
                 var productArray = await response.Content.ReadFromJsonAsync<Product[]>();
                 Products.Clear();
                 ResultProducts.Clear();
+                CountCoffins = 0;
+                CountCrosses = 0;
+                CountMonuments = 0;
+                CountTapes = 0;
+                CountClothe = 0;
+                CountUrns = 0;
                 foreach (var product in productArray)
                 {
                     Products.Add(product);
@@ -183,13 +189,20 @@ namespace RitualProject
             {
                 return _DeleteProductCommand ?? (_DeleteProductCommand = new RelayCommands(async obj =>
                 {
-                    var ProductToRemove = obj as Product;
-                    if (ProductToRemove != null)
+                    try
                     {
-                        Products.Remove(ProductToRemove);
-                        ResultProducts.Remove(ProductToRemove);
-                        var response = await _apiClient.Client.DeleteAsync($"{_apiClient.BaseUrl}/api/Product/{ProductToRemove.ProductId}");
-                        response.EnsureSuccessStatusCode();
+                        var ProductToRemove = obj as Product;
+                        if (ProductToRemove != null)
+                        {
+                            Products.Remove(ProductToRemove);
+                            ResultProducts.Remove(ProductToRemove);
+                            var response = await _apiClient.Client.DeleteAsync($"{_apiClient.BaseUrl}/api/Product/{ProductToRemove.ProductId}");
+                            response.EnsureSuccessStatusCode();
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
                     }
                 }));
             }

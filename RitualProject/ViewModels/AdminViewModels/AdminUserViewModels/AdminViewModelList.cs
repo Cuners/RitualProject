@@ -7,7 +7,6 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using System.Net.Http.Json;
 using RitualServer.Model;
 using Newtonsoft.Json;
 using Microsoft.Win32;
@@ -74,7 +73,7 @@ namespace RitualProject
             }
             
         }
-        public async Task LoadDataAsync()
+        public async System.Threading.Tasks.Task LoadDataAsync()
         {
             try
             {
@@ -93,6 +92,17 @@ namespace RitualProject
                 MessageBox.Show($"Ошибка загрузки ролей: {ex.Message}");
             }
         }
+        public bool ValidateEmail(string email)
+        {
+            foreach(char c in email)
+            {
+                if (c == '@')
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         private RelayCommands _EditAddUserCommand;
         public RelayCommands EditAddUserCommand
         {
@@ -100,6 +110,56 @@ namespace RitualProject
             {
                 return _EditAddUserCommand ?? (_EditAddUserCommand = new RelayCommands(async obj =>
                 {
+                    if (string.IsNullOrWhiteSpace(UserEd.Login))
+                    {
+                        MessageBox.Show("Вы не ввели логин");
+                        return;
+                    }
+                    if (string.IsNullOrWhiteSpace(UserEd.Password))
+                    {
+                        MessageBox.Show("Вы не ввели пароль");
+                        return;
+                    }
+                    if (string.IsNullOrWhiteSpace(UserEd.FirstName))
+                    {
+                        MessageBox.Show("Вы не ввели имя");
+                        return;
+                    }
+                    if (string.IsNullOrWhiteSpace(UserEd.LastName))
+                    {
+                        MessageBox.Show("Вы не ввели фамилию");
+                        return;
+                    }
+                    if (string.IsNullOrWhiteSpace(UserEd.Email))
+                    {
+                        MessageBox.Show("Вы не ввели email");
+                        return;
+                    }
+                    if (string.IsNullOrWhiteSpace(UserEd.Phone))
+                    {
+                        MessageBox.Show("Вы не ввели телефон");
+                        return;
+                    }
+                    if (string.IsNullOrWhiteSpace(UserEd.Adress))
+                    {
+                        MessageBox.Show("Вы не ввели адрес проживания");
+                        return;
+                    }
+                    if (UserEd.RoleId ==0)
+                    {
+                        MessageBox.Show("Вы не выбрали роль");
+                        return;
+                    }
+                    if (UserEd.Phone.Length != 11) 
+                    {
+                        MessageBox.Show("Телефон не полный");
+                        return;
+                    }
+                    if (!ValidateEmail(UserEd.Email))
+                    {
+                        MessageBox.Show("Введите полный email");
+                        return;
+                    }
                     if (WhatNow == "Редактирование сотрудника")
                     {
                         var response = await _apiClient.Client.PutAsync($"{_apiClient.BaseUrl}/api/User/{UserEd.UserId}", new StringContent(JsonConvert.SerializeObject(UserEd), Encoding.UTF8, "application/json"));

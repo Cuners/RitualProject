@@ -1,0 +1,394 @@
+﻿<UserControl x:Class="RitualProject.ChatListUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RitualProject"
+                         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             mc:Ignorable="d" 
+             MinWidth="330"
+             x:Name="_Chats">
+
+    <UserControl.Resources>
+        <Style TargetType="Label" x:Key="LabelText">
+            <Setter Property="Foreground" Value="Black"></Setter>
+        </Style>
+        <local:ByteArrayToBitmapImageConverter x:Name="binaryConverter" x:Key="byteToImageConverter"/>
+
+        <DataTemplate x:Key="ChatButtonItemTemplate">
+            <RadioButton GroupName="ChatButton">
+                <RadioButton.Style>
+                    <Style TargetType="{x:Type ToggleButton}">
+
+
+                        <Setter Property="IsChecked" 
+                                Value="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
+                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        <Setter Property="MinHeight" Value="80"/>
+                        <Setter Property="MinWidth" Value="320"/>
+                        <Setter Property="Padding" Value="11.8"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Content" Value="{Binding Login}"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ToggleButton">
+
+                                    <Border BorderThickness="{TemplateBinding BorderThickness}" 
+                                            Background="{TemplateBinding Background}" 
+                                            BorderBrush="{TemplateBinding BorderBrush}" 
+                                            CornerRadius="20"
+                                            Padding="{TemplateBinding Padding}" 
+                                            SnapsToDevicePixels="True" 
+                                            x:Name="border">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Border Grid.RowSpan="3"
+                                                    x:Name="BackChild"
+                                                    Margin="-10"
+                                                    CornerRadius="20"
+                                                    Background="Transparent"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Stretch"/>
+                                            <Grid Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Ellipse Width="50" Height="50">
+                                                    <Ellipse.Fill>
+                                                        <ImageBrush Stretch="UniformToFill" 
+                                                                    ImageSource="{Binding Image,TargetNullValue={x:Null}, Converter={StaticResource byteToImageConverter}}"/>
+                                                    </Ellipse.Fill>
+                                                </Ellipse>
+                                                <Grid Grid.Column="1"
+                                                      Margin="20,0">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Text="{Binding Login}"
+                                                               FontSize="20" >
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}" Value="True">
+                                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                    <!--Message-->
+                                                    <TextBlock Grid.Row="1" Text="{Binding LastMessage}"
+                                                               FontSize="10" 
+                                                               TextTrimming="CharacterEllipsis"
+                                                               >
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}" Value="True">
+                                                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+
+                                                </Grid>
+                                                <!--Last Message Time -->
+                                                <Grid Grid.Column="2">
+                                                    <TextBlock Text="{Binding DateOfLastMessage}" HorizontalAlignment="Right" FontSize="10" Opacity="0.5"></TextBlock>
+                                                </Grid>
+
+                                            </Grid>
+
+                                            <Grid x:Name="OptionsGrid"
+                                                Grid.Row="1" Height="0">
+                                                <StackPanel>
+                                                    <Separator Margin="0,10,0,0" BorderBrush="WhiteSmoke"/>
+                                                    <UniformGrid Columns="4" Grid.Column="1">
+                                                        <!-- Pin/Unpin-->
+                                                        <Button CommandParameter="{Binding}">
+                                                            <Button.Style>
+                                                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                                                    <Setter Property="Command" Value="{Binding DataContext.PinChatCommand, ElementName=_Chats}"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Is_Pinned}" Value="True">
+                                                                            <Setter Property="Command" Value="{Binding DataContext.UnPinChatCommand, ElementName=_Chats}"/>
+                                                                        </DataTrigger>
+
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Button.Style>
+                                                            <materialDesign:PackIcon Kind="Pin" Foreground="Black"/>
+
+
+                                                            <Button.ToolTip>
+                                                                <StackPanel>
+                                                                    <Label Style="{StaticResource LabelText}">Закрепить</Label>
+                                                                </StackPanel>
+                                                            </Button.ToolTip>
+
+                                                        </Button>
+
+                                                        <!--Archive/UnArchive-->
+                                                        <Button CommandParameter="{Binding}" >
+                                                            <materialDesign:PackIcon Kind="Archive" Foreground="Black"/>
+                                                            <Button.ToolTip>
+                                                                <StackPanel>
+                                                                    <Label Style="{StaticResource LabelText}">Архив</Label>
+                                                                </StackPanel>
+                                                            </Button.ToolTip>
+                                                            <Button.Style>
+                                                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                                                    <Setter Property="Command" Value="{Binding DataContext.ArchiveChatCommand, ElementName=_Chats}"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Is_Archived}" Value="True">
+
+                                                                            <Setter Property="Command" Value="{Binding DataContext.UnArchiveChatCommand, ElementName=_Chats}"/>
+                                                                        </DataTrigger>
+
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Button.Style>
+                                                        </Button>
+
+
+                                                        <Button Style="{StaticResource MaterialDesignFlatButton}" >
+                                                            <materialDesign:PackIcon Kind="Mute" Foreground="Black"/>
+                                                            <Button.ToolTip>
+                                                                <StackPanel>
+                                                                    <Label Style="{StaticResource LabelText}">Заглушить</Label>
+                                                                </StackPanel>
+                                                            </Button.ToolTip>
+                                                        </Button>
+                                                        <Button Style="{StaticResource MaterialDesignFlatButton}" >
+                                                            <materialDesign:PackIcon Kind="Trash" Foreground="Black"/>
+                                                            <Button.ToolTip>
+                                                                <StackPanel>
+                                                                    <Label Style="{StaticResource LabelText}">Удалить</Label>
+                                                                </StackPanel>
+                                                            </Button.ToolTip>
+                                                        </Button>
+                                                    </UniformGrid>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard SpeedRatio="5">
+                                                        <DoubleAnimation Storyboard.TargetName="OptionsGrid" Storyboard.TargetProperty="Height"  To="40"/>
+                                                        <ColorAnimation  Storyboard.TargetProperty="(Background).Color" From="Transparent" To="#b7cafb"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard SpeedRatio="5">
+                                                        <DoubleAnimation Storyboard.TargetName="OptionsGrid" Storyboard.TargetProperty="Height"  To="0"/>
+                                                        <ColorAnimation  Storyboard.TargetProperty="(Background).Color" From="#b7cafb" To="Transparent"/>
+
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.ExitActions>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard SpeedRatio="5">
+
+                                                        <ColorAnimation Storyboard.TargetName="BackChild"  Storyboard.TargetProperty="(Background).Color" From="Transparent" To="#dce1de"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard SpeedRatio="5">
+
+                                                        <ColorAnimation Storyboard.TargetName="BackChild" Storyboard.TargetProperty="(Background).Color" From="#dce1de" To="Transparent"/>
+
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.ExitActions>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </RadioButton.Style>
+            </RadioButton>
+        </DataTemplate>
+        <Style x:Key="ArchiveButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Visibility" Value="Visible"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border Background="{TemplateBinding Background}">
+                            <Grid x:Name="background" 
+                                  Grid.ColumnSpan="2"
+                                  Opacity="0.6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition />
+
+                                </Grid.ColumnDefinitions>
+                                <materialDesign:PackIcon  Margin="0,5,0,0" 
+                                          Kind="ArrowBack"
+                                          Width="10" Height="10" 
+                                          Foreground="Black"/>
+                                <TextBlock Grid.Column="1"
+                                           Grid.ColumnSpan="2"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center">
+                                    <Run Text="Архивированные ("/>
+                                    <Run Text="{Binding DataContext.ArchivedConservations.Count,Mode=OneWay,ElementName=_Chats}"/>
+                                    <Run Text=")"/>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding DataContext.ArchivedConservations.Count, ElementName=_Chats}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="background" Property="Background" Value="#dce1de"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="background" Property="Background" Value="#dce1de"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer>
+        <Grid >
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Visibility, ElementName=ArchivePanel}" Value="Visible">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+
+                </Grid.RowDefinitions>
+                <!--Закрепленный чаты-->
+                <StackPanel Orientation="Vertical">
+                    <StackPanel.Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding FilteredPinnedConservations.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+
+                    <StackPanel  Orientation="Horizontal" 
+                                 VerticalAlignment="Center" 
+                                 Margin="20,0,0,0">
+
+                        <materialDesign:PackIcon  Margin="0,5,0,0" 
+                                          Kind="Pin"
+                                          Width="10" Height="10" 
+                                          Foreground="Black"/>
+                        <TextBlock Margin="10,0,0,0"  
+                           Text="Закрепленные чаты" 
+                           FontWeight="SemiBold" />
+                    </StackPanel>
+                    <ListBox 
+                     ScrollViewer.VerticalScrollBarVisibility="Hidden" 
+                     SelectedItem="{Binding SelectedCons}"
+                     ItemsSource="{Binding FilteredPinnedConservations}" 
+                     ItemTemplate="{StaticResource ChatButtonItemTemplate}">
+                    </ListBox>
+                </StackPanel>
+                <StackPanel Grid.Row="1" >
+                    <StackPanel  Orientation="Horizontal" 
+                                 VerticalAlignment="Center"
+                                 Margin="20,0,0,0">
+                        <materialDesign:PackIcon  Margin="0,5,0,0" 
+                                          Kind="Chat"
+                                          Width="10" Height="10" 
+                                          Foreground="Black"/>
+                        <TextBlock Margin="10,0,0,0"  
+                           Text="Чаты" 
+                           FontWeight="SemiBold" />
+                    </StackPanel>
+                    <ListBox 
+                     ScrollViewer.VerticalScrollBarVisibility="Hidden" 
+                     SelectedItem="{Binding SelectedCons}"
+                     ItemsSource="{Binding FilteredConservations}" 
+                     ItemTemplate="{StaticResource ChatButtonItemTemplate}">
+                    </ListBox>
+                    <RadioButton x:Name="OpenArchive" 
+                              GroupName="Archive"
+                             Style="{StaticResource ArchiveButtonStyle}"/>
+                </StackPanel>
+            </Grid>
+            <StackPanel Grid.Row="2" x:Name="ArchivePanel" >
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked,ElementName=OpenArchive}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsChecked,ElementName=CloseArchive}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Visibility,ElementName=CloseArchive}" Value="Collapsed">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <RadioButton 
+                             x:Name="CloseArchive"
+                             GroupName="Archive"
+                              IsChecked="True"
+                             Style="{StaticResource ArchiveButtonStyle}">
+                    <materialDesign:PackIcon  Margin="0,5,0,0" 
+                                          Kind="ArrowBack"
+                                          Width="10" Height="10" 
+                                          Foreground="Black"/>
+                </RadioButton>
+                <ListBox Background="Transparent"
+                         BorderThickness="0"
+                         SelectedItem="{Binding SelectedCons}"
+                              ItemsSource="{Binding ArchivedConservations}"
+                              ItemTemplate="{StaticResource ChatButtonItemTemplate}"/>
+            </StackPanel>
+
+
+        </Grid>
+    </ScrollViewer>
+
+</UserControl>
