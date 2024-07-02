@@ -60,4 +60,6 @@
 Автор: Мухаметзянов М. М.  
 Email: [example@example.com](mailto:marat-559@mail.ru)  
 
+Вы также можете посмотреть оформленную презентацию - [презентация](https://docs.google.com/presentation/d/1rEwesXXxsNGDaacDnRo-sFgt9IqoDgg-/edit?usp=drive_web&ouid=109764034149785971408&rtpof=true).
+
 Спасибо за интерес к проекту!
